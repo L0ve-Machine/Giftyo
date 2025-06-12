@@ -1,0 +1,39 @@
+<!-- templates/fan/home.html -->
+{% extends 'base.html' %}
+{% block title %}インフルエンサー一覧 | Giftyo{% endblock %}
+{% block content %}
+  <h1 class="text-xl font-semibold text-gray-800 mb-4">インフルエンサー一覧</h1>
+  <div class="space-y-4">
+    {% for inf in influencers %}
+      <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
+         class="block bg-white rounded-lg shadow p-4 flex items-center space-x-4 hover:shadow-md transition">
+        <!-- サムネイル画像があれば表示 -->
+        {% if inf.profile_image_url %}
+          <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+            <img src="{{ inf.profile_image_url }}"
+                 alt="{{ inf.display_name }}"
+                 class="object-cover w-full h-full">
+          </div>
+        {% else %}
+          <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+            <span class="text-sm">No</span>
+          </div>
+        {% endif %}
+
+        <div class="flex-1">
+          <h2 class="text-base font-medium text-gray-800">{{ inf.display_name }}</h2>
+          {% if inf.bio %}
+            <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ inf.bio }}</p>
+          {% endif %}
+        </div>
+        <!-- 右矢印アイコン -->
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    {% empty %}
+      <p class="text-sm text-gray-500">現在、登録されたインフルエンサーはいません。</p>
+    {% endfor %}
+  </div>
+{% endblock %}

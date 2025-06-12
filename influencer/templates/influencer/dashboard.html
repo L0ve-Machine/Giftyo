@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% load static humanize %}
+
+{% block content %}
+      {% if unread_gifts %}
+        <div class="max-w-3xl mx-auto mt-8">
+          <div class="bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 p-4 mb-6 rounded">
+            {% for gift in unread_gifts %}
+              <div class="flex justify-between items-center mb-2">
+                <p class="mr-4 flex-1">
+                  🎁 {{ gift.sender_name }}さんからギフトが届きました！
+                </p>
+                <form
+                  method="post"
+                  action="{% url 'influencer:gift_mark_read' gift.pk %}"
+                  class="flex-shrink-0"
+                >
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    aria-label="既読にする"
+                    class="text-gray-500 hover:text-gray-700"
+                  >
+                    ×
+                  </button>
+                </form>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+<div class="max-w-3xl mx-auto mt-8">
+
+  <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+    <div class="flex items-center space-x-4">
+      {% if profile.profile_image %}
+        <img src="{{ profile.profile_image.url }}"
+             alt="{{ profile.display_name }}"
+             class="w-16 h-16 object-cover rounded-full">
+      {% else %}
+        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="h-8 w-8 text-gray-400"
+               viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 12c2.7 0 4.875-2.175 4.875-4.875S14.7 2.25 12 2.25 7.125 4.425 7.125 7.125 9.3 12 12 12zm0 1.5c-3.225 0-9.75 1.612-9.75 4.875v2.25h19.5v-2.25c0-3.263-6.525-4.875-9.75-4.875z"/>
+          </svg>
+        </div>
+      {% endif %}
+
+      <div class="flex-1">
+        <p class="text-2xl font-semibold text-gray-800">{{ profile.display_name }}</p>
+        {% if profile.bio %}
+          <p class="text-sm text-gray-600 mt-1">{{ profile.bio }}</p>
+        {% endif %}
+        <p class="text-sm text-gray-500 mt-1">
+          URLスラッグ：<span class="font-medium">{{ profile.slug }}</span>
+        </p>
+
+        <div class="flex space-x-3 mt-3">
+          {% if profile.instagram_url %}
+            <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener noreferrer"
+               class="text-pink-500 hover:text-pink-600 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   class="h-6 w-6"
+                   viewBox="0 0 50 50"
+                   fill="currentColor">
+                <path d="M 16 3
+                         C 8.8324839 3 3 8.8324839 3 16
+                         L 3 34
+                         C 3 41.167516 8.8324839 47 16 47
+                         L 34 47
+                         C 41.167516 47 47 41.167516 47 34
+                         L 47 16
+                         C 47 8.8324839 41.167516 3 34 3
+                         L 16 3 z
+                         M 16 5
+                         L 34 5
+                         C 40.086484 5 45 9.9135161 45 16
+                         L 45 34
+                         C 45 40.086484 40.086484 45 34 45
+                         L 16 45
+                         C 9.9135161 45 5 40.086484 5 34
+                         L 5 16
+                         C 5 9.9135161 9.9135161 5 16 5 z
+                         M 37 11
+                         A 2 2 0 0 0 35 13
+                         A 2 2 0 0 0 37 15
+                         A 2 2 0 0 0 39 13
+                         A 2 2 0 0 0 37 11 z
+                         M 25 14
+                         C 18.936712 14 14 18.936712 14 25
+                         C 14 31.063288 18.936712 36 25 36
+                         C 31.063288 36 36 31.063288 36 25
+                         C 36 18.936712 31.063288 14 25 14 z
+                         M 25 16
+                         C 29.982407 16 34 20.017593 34 25
+                         C 34 29.982407 29.982407 34 25 34
+                         C 20.017593 34 16 29.982407 16 25
+                         C 16 20.017593 20.017593 16 25 16 z" />
+              </svg>
+            </a>
+          {% endif %}
+
+          {% if profile.twitter_url %}
+            <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener noreferrer"
+               class="text-gray-700 hover:text-gray-900 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   class="h-6 w-6"
+                   viewBox="0 0 50 50"
+                   fill="currentColor">
+                <path d="M 5.9199219 6
+                         L 20.582031 27.375
+                         L 6.2304688 44
+                         L 9.4101562 44
+                         L 21.986328 29.421875
+                         L 31.986328 44
+                         L 44 44
+                         L 28.681641 21.669922
+                         L 42.199219 6
+                         L 39.029297 6
+                         L 27.275391 19.617188
+                         L 17.933594 6
+                         L 5.9199219 6
+                         z
+                         M 9.7167969 8
+                         L 16.880859 8
+                         L 40.203125 42
+                         L 33.039062 42
+                         L 9.7167969 8
+                         z" />
+              </svg>
+            </a>
+          {% endif %}
+
+          {% if profile.tiktok_url %}
+            <a href="{{ profile.tiktok_url }}" target="_blank" rel="noopener noreferrer"
+               class="text-black hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   class="h-6 w-6"
+                   viewBox="0 0 50 50"
+                   fill="currentColor">
+                <path d="M 5.9199219 6
+                         L 20.582031 27.375
+                         L 6.2304688 44
+                         L 9.4101562 44
+                         L 21.986328 29.421875
+                         L 31.986328 44
+                         L 44 44
+                         L 28.681641 21.669922
+                         L 42.199219 6
+                         L 39.029297 6
+                         L 27.275391 19.617188
+                         L 17.933594 6
+                         L 5.9199219 6
+                         z
+                         M 9.7167969 8
+                         L 16.880859 8
+                         L 40.203125 42
+                         L 33.039062 42
+                         L 9.7167969 8
+                         z" />
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <a href="{% url 'influencer:profile' %}"
+         class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-sm text-sm">
+        プロフィールを編集
+      </a>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-bold text-gray-800">欲しいもののリスト</h2>
+    <a href="{% url 'influencer:wish_add' %}"
+       class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-sm text-sm">
+      新しくアイテムを追加
+    </a>
+  </div>
+
+  {% for item in wish_list %}
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+      <div class="flex space-x-4">
+        {% if item.image_file %}
+          <img src="{{ item.image_file.url }}"
+               alt="{{ item.product_name }}"
+               class="w-24 h-24 object-cover rounded-lg">
+        {% elif item.image_url %}
+          <img src="{{ item.image_url }}"
+               alt="{{ item.product_name }}"
+               class="w-24 h-24 object-cover rounded-lg">
+        {% else %}
+          <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center">
+            <span class="text-gray-400 text-sm">No Image</span>
+          </div>
+        {% endif %}
+
+        <div class="flex-1">
+          <p class="text-lg font-semibold text-gray-800">{{ item.product_name }}</p>
+          {% if item.brand %}
+            <p class="text-sm text-gray-600 mt-1">ブランド: {{ item.brand }}</p>
+          {% endif %}
+          {% if item.product_url %}
+            <p class="mt-1">
+              <a href="{{ item.product_url }}"
+                 class="text-blue-500 hover:underline text-sm truncate block w-48">
+                商品ページを見る
+              </a>
+            </p>
+          {% endif %}
+          {% if item.desired_price %}
+            <p class="text-sm text-gray-700 mt-1">希望価格: ¥{{ item.desired_price|intcomma }}</p>
+          {% endif %}
+          {% if item.note %}
+            <p class="text-sm text-gray-600 mt-1">備考: {{ item.note }}</p>
+          {% endif %}
+          <p class="text-xs text-gray-400 mt-1">作成日: {{ item.created_at|date:"Y年n月j日 H:i" }}</p>
+        </div>
+
+        <div class="flex flex-col space-y-2">
+          <a href="{% url 'influencer:wish_edit' item.pk %}"
+             class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm text-center">
+            編集
+          </a>
+          <form method="post" action="{% url 'influencer:wish_delete' item.pk %}">
+            {% csrf_token %}
+            <button type="submit"
+                    class="w-full px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm">
+              削除
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-gray-500">まだ登録されているアイテムはありません。</p>
+  {% endfor %}
+
+</div>
+    <div class="mt-6">
+  <a href="{% url 'influencer:shipping_address' %}"
+     class="block w-full py-3 text-center border border-gray-300 rounded-lg bg-white text-gray-800 hover:bg-gray-50 transition">
+    転送先設定
+  </a>
+</div>
+{% endblock %}
+

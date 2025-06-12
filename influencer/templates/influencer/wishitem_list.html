@@ -1,0 +1,65 @@
+<!-- templates/influencer/wishitem_list.html -->
+{% extends "base.html" %}
+{% load static humanize %}
+
+{% block content %}
+<div class="max-w-md mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4">欲しいものリスト</h1>
+  <div class="text-right mb-4">
+    <a href="{% url 'influencer:wishitem_add' %}" class="px-4 py-2 bg-blue-500 text-white rounded">新規追加</a>
+  </div>
+
+  {% if items %}
+    <ul class="space-y-4">
+      {% for item in items %}
+        <li class="border p-4 rounded shadow-sm flex">
+          <!-- 画像表示（優先順位: image_file → image_url → プレースホルダー） -->
+          <div class="w-24 h-24 mr-4 flex-shrink-0">
+            {% if item.image_file %}
+              <img src="{{ item.image_file.url }}" alt="{{ item.product_name }}" class="w-full h-full object-cover rounded">
+            {% elif item.image_url %}
+              <img src="{{ item.image_url }}" alt="{{ item.product_name }}" class="w-full h-full object-cover rounded">
+            {% else %}
+              <div class="w-full h-full bg-gray-200 flex items-center justify-center rounded">
+                <span class="text-gray-500 text-sm">No Image</span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="flex-1">
+            <p class="font-semibold text-lg">{{ item.product_name }}</p>
+            {% if item.brand %}
+              <p class="text-sm text-gray-600">ブランド：{{ item.brand }}</p>
+            {% endif %}
+            <p class="text-sm text-blue-600">
+              <a href="{{ item.product_url }}" target="_blank">ECサイトで見る 🔗</a>
+            </p>
+            {% if item.desired_price %}
+              <p class="text-sm text-gray-600">希望価格：¥{{ item.desired_price|intcomma }}</p>
+            {% else %}
+              <p class="text-sm text-gray-600">希望価格：—</p>
+            {% endif %}
+            {% if item.note %}
+              <p class="text-sm text-gray-500 mt-1">備考：{{ item.note }}</p>
+            {% endif %}
+            <p class="text-sm mt-1">
+              表示設定：
+              {% if item.is_visible %}
+                <span class="text-green-600">公開中</span>
+              {% else %}
+                <span class="text-red-600">非公開</span>
+              {% endif %}
+            </p>
+            <p class="text-xs text-gray-400 mt-1">作成: {{ item.created_at|date:"Y/m/d H:i" }}</p>
+          </div>
+          <div class="ml-4 flex flex-col space-y-2">
+            <a href="{% url 'influencer:wishitem_edit' item.pk %}" class="text-blue-500 text-sm">編集</a>
+            <a href="{% url 'influencer:wishitem_delete' item.pk %}" class="text-red-500 text-sm">削除</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-500">まだアイテムが登録されていません。</p>
+  {% endif %}
+</div>
+{% endblock %}

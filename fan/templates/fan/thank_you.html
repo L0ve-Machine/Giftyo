@@ -1,0 +1,48 @@
+<!-- templates/fan/thank_you.html -->
+{% extends 'base.html' %}
+{% block title %}ギフトを贈りました！ | Giftyo{% endblock %}
+
+{% block content %}
+  <div class="flex flex-col items-center space-y-4">
+    <!-- Icon or Image -->
+    <img src="{% static 'images/thanks-icon.png' %}" alt="Thanks" class="w-20 h-20">
+
+    <h2 class="text-2xl font-semibold text-gray-800">ギフトを贈りました！</h2>
+    <p class="text-sm text-gray-600 text-center">
+      あなたの応援が、{{ influencer.display_name }} さんに届きます。<br>
+      Giftyo からあなたへ「{{ influencer.display_name }} 様宛」通知が送信されました。<br>
+      転送準備ができ次第、メールでお知らせします。
+    </p>
+
+    <!-- 応援メッセージ表示（あれば） -->
+    {% if anonymous_message %}
+      <div class="bg-gray-100 rounded-lg p-3 text-left text-sm text-gray-700 w-full">
+        {{ anonymous_message }}
+      </div>
+    {% endif %}
+
+    <!-- ボタン群 -->
+    <div class="w-full space-y-3 mt-4">
+      <!-- 他のギフトを贈る -->
+      <a href="{% url 'fan:influencer_public' slug=influencer.slug %}"
+         class="block w-full text-center py-3 bg-white border border-primary text-primary rounded-lg text-base font-medium hover:bg-primary hover:text-white transition">
+        他のギフトを贈る
+      </a>
+      <!-- Giftyoをシェアする -->
+      <a href="https://twitter.com/intent/tweet?text={{ share_text|urlencode }}"
+         target="_blank"
+         class="flex items-center justify-center space-x-2 w-full py-3 bg-primary text-white rounded-lg text-base font-medium hover:bg-primary-dark transition">
+        <!-- TwitterアイコンSVG -->
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 ..."/>
+        </svg>
+        <span>Giftyoをシェアする</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 注意書き -->
+  <p class="mt-6 text-xs text-gray-500 text-center">
+    ※インフルエンサーにはあなたの個人情報は伝わりません。
+  </p>
+{% endblock %}

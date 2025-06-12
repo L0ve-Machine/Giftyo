@@ -1,0 +1,58 @@
+<!-- templates/fan/payment_summary.html -->
+{% extends 'base.html' %}
+{% block title %}ギフトの準備が整います | Giftyo{% endblock %}
+
+{% block content %}
+  <h2 class="text-xl font-semibold text-gray-800 mb-2">🎁 ギフトの準備が整います</h2>
+  <p class="text-sm text-gray-600 mb-6">あとは、届けるまでです。</p>
+
+  <!-- 内訳リスト -->
+  <div class="bg-white rounded-lg shadow p-4 mb-6 space-y-4">
+    <!-- 配送費用 -->
+    <div class="flex justify-between">
+      <span class="text-gray-700">◯◯さんへ郵送費用</span>
+      <span class="font-medium text-gray-800">¥{{ shipping_fee }}</span>
+    </div>
+    <!-- 匿名転送手数料 -->
+    <div class="flex justify-between">
+      <span class="text-gray-700">匿名転送手数料</span>
+      <span class="font-medium text-gray-800">¥{{ anonymous_fee }}</span>
+    </div>
+    <!-- ラッピング代 -->
+    <div class="flex justify-between">
+      <span class="text-gray-700">ラッピング代（{{ wrapping_option }}）</span>
+      <span class="font-medium text-gray-800">¥{{ wrapping_fee }}</span>
+    </div>
+    <!-- メッセージカード -->
+    <div class="flex justify-between">
+      <span class="text-gray-700">メッセージカード</span>
+      <span class="font-medium text-gray-800">¥{{ message_card_fee }}</span>
+    </div>
+    <!-- 決済手数料 -->
+    <div class="flex justify-between">
+      <span class="text-gray-700">決済手数料</span>
+      <span class="font-medium text-gray-800">¥{{ payment_fee }}</span>
+    </div>
+
+    <!-- 合計行 -->
+    <div class="flex justify-between border-t border-gray-200 pt-4">
+      <span class="text-lg font-semibold text-gray-800">合計</span>
+      <span class="text-lg font-semibold text-gray-800">¥{{ total_amount }}</span>
+    </div>
+  </div>
+
+  <!-- この内容でギフトを贈る ボタン -->
+  <button
+    onclick="location.href='{% url 'fan:confirm_payment' gift_id=gift.id %}'"
+    class="w-full py-3 bg-primary text-white font-medium rounded-lg text-base hover:bg-primary-dark transition mb-6">
+    この内容でギフトを贈る
+  </button>
+
+  <!-- カードブランドロゴ（グレー＆薄めに表示） -->
+  <div class="flex justify-center items-center space-x-4">
+    <img src="{% static 'images/visa-gray.png' %}" alt="Visa" class="w-12 opacity-50">
+    <img src="{% static 'images/mastercard-gray.png' %}" alt="Mastercard" class="w-12 opacity-50">
+    <img src="{% static 'images/jcb-gray.png' %}" alt="JCB" class="w-12 opacity-50">
+    <!-- 必要に応じて他のブランドロゴを追加 -->
+  </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!-- templates/influencer/wishitem_confirm_delete.html -->
+{% extends "base.html" %}
+{% load static humanize %}
+
+{% block content %}
+<div class="max-w-md mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4">アイテムを削除</h1>
+  <p class="mb-4">以下のアイテムを本当に削除してもよろしいですか？</p>
+  <div class="border p-4 rounded mb-4 flex items-center">
+    <div class="w-20 h-20 mr-4 flex-shrink-0">
+      {% if object.image_file %}
+        <img src="{{ object.image_file.url }}" alt="{{ object.product_name }}" class="w-full h-full object-cover rounded">
+      {% elif object.image_url %}
+        <img src="{{ object.image_url }}" alt="{{ object.product_name }}" class="w-full h-full object-cover rounded">
+      {% else %}
+        <div class="w-full h-full bg-gray-200 flex items-center justify-center rounded">
+          <span class="text-gray-500 text-sm">No Image</span>
+        </div>
+      {% endif %}
+    </div>
+    <div>
+      <p class="font-semibold">{{ object.product_name }}</p>
+      {% if object.brand %}
+        <p class="text-sm text-gray-600">ブランド：{{ object.brand }}</p>
+      {% endif %}
+      {% if object.desired_price %}
+        <p class="text-sm text-gray-600">希望価格：¥{{ object.desired_price|intcomma }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded">削除する</button>
+    <a href="{% url 'influencer:wishitem_list' %}" class="ml-4 text-gray-700">キャンセル</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,143 @@
+{# templates/influencer/wishitem_form.html #}
+{% extends "base.html" %}
+{% load static humanize %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-8">
+  {# フォーム全体を #fafaf5 の背景色にしたカードに #}
+  <div class="bg-[#fafaf5] shadow-md rounded-lg p-6">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">新しいアイテムを追加</h2>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      {# ---------- 商品名 ---------- #}
+      <div>
+        <label for="{{ form.product_name.id_for_label }}"
+               class="block text-sm font-medium text-gray-700">
+          商品名<span class="text-red-500">*</span>
+        </label>
+        {{ form.product_name }}
+        {{ form.product_name.errors }}
+      </div>
+
+      {# ---------- ブランド名（任意） ---------- #}
+      <div>
+        <label for="{{ form.brand.id_for_label }}"
+               class="block text-sm font-medium text-gray-700">
+          ブランド名（任意）
+        </label>
+        {{ form.brand }}
+        {{ form.brand.errors }}
+      </div>
+
+      {# ---------- 商品URL ---------- #}
+      <div>
+        <label for="{{ form.product_url.id_for_label }}"
+               class="block text-sm font-medium text-gray-700">
+          商品URL<span class="text-red-500">*</span>
+        </label>
+        <div class="relative mt-1">
+          {{ form.product_url }}
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="h-5 w-5 text-gray-400"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M14.828 9.172a4 4 0 010 5.656m-1.414-1.414a2 2 0 000-2.828
+                    M9.172 14.828a4 4 0 010-5.656m1.414 1.414a2 2 0 000 2.828" />
+            </svg>
+          </div>
+        </div>
+        {{ form.product_url.errors }}
+      </div>
+
+      {# ---------- 画像URL（任意） ---------- #}
+      <div>
+        <label for="{{ form.image_url.id_for_label }}"
+               class="block text-sm font-medium text-gray-700">
+          画像URL（任意）
+        </label>
+        {{ form.image_url }}
+        {{ form.image_url.errors }}
+        <p class="text-xs text-gray-500 mt-1">外部URLから画像を取得する場合はこちらに入力</p>
+      </div>
+
+      {# ---------- 画像アップロード（任意） ---------- #}
+      <div>
+        <label class="block text-sm font-medium text-gray-700">
+          画像を手動アップロード（任意）
+        </label>
+        <div class="mt-1 flex items-center">
+          {# "ファイルを選択" ボタンをやさしいグレーでデザイン #}
+          <label for="{{ form.image_file.id_for_label }}"
+                 class="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="h-5 w-5 text-gray-600 mr-2"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 7v10a4 4 0 004 4h10a4 4 0 004-4V7
+                    m-8-4v8m0 0l3-3m-3 3l-3-3" />
+            </svg>
+            <span class="text-gray-700">ファイルを選択</span>
+          </label>
+          {{ form.image_file }} {# class="hidden" なので実体は非表示 #}
+        </div>
+        {{ form.image_file.errors }}
+        <p class="text-xs text-gray-500 mt-1">※画像URLとアップロード、どちらか片方あれば OK。アップロード優先。</p>
+      </div>
+
+      {# ---------- 希望価格・並び順：横並び ---------- #}
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="{{ form.desired_price.id_for_label }}"
+                 class="block text-sm font-medium text-gray-700">
+            希望価格（円）
+          </label>
+          {{ form.desired_price }}
+          {{ form.desired_price.errors }}
+        </div>
+        <div>
+          <label for="{{ form.order.id_for_label }}"
+                 class="block text-sm font-medium text-gray-700">
+            並び順（小さいほど上）
+          </label>
+          {{ form.order }}
+          {{ form.order.errors }}
+          <p class="text-xs text-gray-500 mt-1">数値が小さいほど上に表示されます</p>
+        </div>
+      </div>
+
+      {# ---------- 備考 ---------- #}
+      <div>
+        <label for="{{ form.note.id_for_label }}"
+               class="block text-sm font-medium text-gray-700">
+          備考（サイズ・色など）
+        </label>
+        {{ form.note }}
+        {{ form.note.errors }}
+      </div>
+
+      {# ---------- 公開フラグ ---------- #}
+      <div class="flex items-center">
+        {{ form.is_visible }}
+        <label for="{{ form.is_visible.id_for_label }}"
+               class="ml-2 block text-sm text-gray-700">
+          公開する
+        </label>
+        {{ form.is_visible.errors }}
+      </div>
+
+      {# ---------- 送信ボタン：グレー青系に変更 ---------- #}
+      <div class="pt-6">
+        <button type="submit"
+                class="w-full py-3 bg-gray-400 hover:bg-gray-500 text-white font-semibold rounded-lg shadow">
+          リストに追加
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

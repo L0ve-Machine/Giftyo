@@ -1,0 +1,84 @@
+<!-- templates/fan/gift_notify.html -->
+{% extends 'base.html' %}
+{% block title %}ギフト発送通知 | Giftyo{% endblock %}
+
+{% block content %}
+  <!-- ギフトの贈り方ガイド 見出し -->
+  <h2 class="text-xl font-semibold text-gray-800 mb-3">🎁 ギフトの贈り方ガイド</h2>
+
+  <!-- ガイド文 -->
+  <div class="bg-white rounded-lg shadow mb-6 p-4 space-y-2 text-sm text-gray-700">
+    <p>1. ご商品をECサイトで購入してください。</p>
+    <p>　→ <a href="{{ selected_item.product_url }}" target="_blank" class="text-primary underline">商品ページはこちら</a></p>
+    <p>2. 下記の住所（Giftyo倉庫）へお送りください。</p>
+  </div>
+
+  <!-- お届け先住所（コピー付き） -->
+  <div class="bg-gray-100 rounded-lg p-4 mb-6">
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="text-sm font-medium text-gray-700">お届け先（Giftyo倉庫）</p>
+        <p class="mt-1 text-sm text-gray-600 leading-relaxed">
+          〒{{ warehouse.postal_code }}<br>
+          {{ warehouse.pref }}{{ warehouse.city }}<br>
+          {{ warehouse.address_line }}<br>
+          {{ warehouse.notes }}<br>
+          <span class="font-medium">（宛名: {{ influencer.display_name }} 様）</span>
+        </p>
+      </div>
+      <button
+        onclick="navigator.clipboard.writeText('〒{{ warehouse.postal_code }} {{ warehouse.pref }}{{ warehouse.city }} {{ warehouse.address_line }} {{ warehouse.notes }}（宛: {{ influencer.display_name }} 様）');"
+        class="px-2 py-1 bg-white border border-gray-300 rounded-md text-xs text-gray-700 hover:bg-gray-200">
+        住所をコピー
+      </button>
+    </div>
+  </div>
+
+  <!-- 発送通知フォーム -->
+  <form method="post" class="bg-white rounded-lg shadow p-4 mb-8 space-y-4">
+    {% csrf_token %}
+    <!-- ニックネーム（任意） -->
+    <div>
+      <label for="fan_nickname" class="block text-sm font-medium text-gray-700 mb-1">ニックネーム（任意）</label>
+      <input type="text" name="fan_nickname" id="fan_nickname"
+             class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+             placeholder="表示名（匿名可）">
+    </div>
+
+    <!-- 追跡番号（必須） -->
+    <div>
+      <label for="tracking_number" class="block text-sm font-medium text-gray-700 mb-1">
+        追跡番号 <span class="text-red-500">*</span>
+      </label>
+      <input type="text" name="tracking_number" id="tracking_number" required
+             class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+             placeholder="例：JP1234567890">
+    </div>
+
+    <!-- 応援メッセージ（任意） -->
+    <div>
+      <label for="anonymous_message" class="block text-sm font-medium text-gray-700 mb-1">
+        応援メッセージ（任意）
+      </label>
+      <textarea name="anonymous_message" id="anonymous_message" rows="4"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="応援メッセージを入力できます（匿名）"></textarea>
+    </div>
+
+    <!-- 送付日（任意） -->
+    <div>
+      <label for="sent_date" class="block text-sm font-medium text-gray-700 mb-1">
+        送付日（任意）
+      </label>
+      <input type="date" name="sent_date" id="sent_date"
+             class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+    </div>
+
+    <!-- 送信ボタン -->
+    <button type="submit"
+            class="w-full py-3 bg-primary text-white font-medium rounded-lg text-base hover:bg-primary-dark transition">
+      発送を通知する
+    </button>
+  </form>
+{% endblock %}
+

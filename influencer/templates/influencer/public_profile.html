@@ -1,0 +1,107 @@
+{# influencer/templates/influencer/public_profile.html #}
+{% extends "base.html" %}
+
+{% block title %}{{ influencer.display_name }} さんのプロフィール{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-md overflow-hidden">
+    {# ━━━ ヘッダーエリア ━━━ #}
+    <div class="px-6 py-6 flex flex-col items-center">
+      {# プロフィール画像 #}
+      {% if influencer.profile_image %}
+        <img
+          src="{{ influencer.profile_image.url }}"
+          alt="プロフィール画像"
+          class="w-24 h-24 rounded-full object-cover border-2 border-gray-300 mb-3"
+        >
+      {% else %}
+        <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5.121 17.804A10.97 10.97 0 0112 15c2.53 0 4.87.95 6.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+      {% endif %}
+
+      {# 表示名（ニックネーム） #}
+      <h1 class="text-xl font-semibold text-gray-800">{{ influencer.display_name }}</h1>
+
+      {# プロフィール文（自己紹介 / ファンへのひとこと） #}
+      {% if influencer.bio %}
+        <p class="mt-1 text-sm text-gray-600 text-center">{{ influencer.bio }}</p>
+      {% else %}
+        <p class="mt-1 text-sm text-gray-400 text-center">自己紹介は未登録です。</p>
+      {% endif %}
+
+      {# SNSリンク（X / Twitter, Instagram などのアイコン） #}
+      <div class="mt-3 flex space-x-4">
+        {# Twitter（X）#}
+        {% if influencer.twitter_url %}
+          <a href="{{ influencer.twitter_url }}" target="_blank" rel="noopener" class="text-gray-700 hover:text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor"
+                 viewBox="0 0 24 24">
+              <path d="M8 19c11 0 17-9.074 17-16.956 0-.257 0-.515-.017-.771A12.412 12.412 0 0027 2.36a11.878 11.878 0 01-3.428.951 6.116 6.116 0 002.672-3.382 11.903 11.903 0 01-3.872 1.479A5.934 5.934 0 0018.418.75c-3.324 0-6.023 2.684-6.023 6.001 0 .47.053.928.155 1.37A16.806 16.806 0 012.14 1.64a5.994 5.994 0 001.86 8.006 5.846 5.846 0 01-2.728-.749v.077c0 3.06 2.176 5.605 5.065 6.182a5.88 5.88 0 01-2.72.104 5.937 5.937 0 005.541 4.131A11.893 11.893 0 010 17.684a16.743 16.743 0 009.065 2.732"/>
+            </svg>
+          </a>
+        {% endif %}
+
+        {# Instagram #}
+        {% if influencer.instagram_url %}
+          <a href="{{ influencer.instagram_url }}" target="_blank" rel="noopener" class="text-gray-700 hover:text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor"
+                 viewBox="0 0 24 24">
+              <path d="M7.75 2h8.5C19.097 2 22 4.903 22 8.25v7.5C22 19.097 19.097 22 16.25 22h-8.5C4.903 22 2 19.097 2 16.25v-7.5C2 4.903 4.903 2 7.75 2zm0 1.5C5.955 3.5 4.5 4.955 4.5 7.75v8.5c0 2.795 1.455 4.25 3.25 4.25h8.5c2.795 0 4.25-1.455 4.25-4.25v-8.5c0-2.795-1.455-4.25-4.25-4.25h-8.5zM12 7a5 5 0 11-.001 10.001A5 5 0 0112 7zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm5.5-.879a1.121 1.121 0 11-2.243 0 1.121 1.121 0 012.243 0z"/>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {# ━━━ 欲しいものリスト部分 (IOSのスクショ例) ━━━ #}
+    <div class="px-4 pb-6">
+      <h2 class="text-lg font-semibold text-gray-800 mb-3">欲しいものリスト</h2>
+      {% if wish_list %}
+        <ul class="space-y-4">
+          {% for wish in wish_list %}
+            <li class="bg-gray-50 border border-gray-200 rounded-lg p-4 flex items-start">
+              {# 画像があればサムネイル表示 #}
+              {% if wish.image_url %}
+                <img src="{{ wish.image_url }}" alt="{{ wish.product_name }}"
+                     class="w-16 h-16 object-cover rounded-md mr-4" />
+              {% else %}
+                <div class="w-16 h-16 bg-gray-200 rounded-md mr-4 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none"
+                       viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 3h18v18H3V3z" />
+                  </svg>
+                </div>
+              {% endif %}
+              <div class="flex-1">
+                <p class="font-medium text-gray-800">{{ wish.product_name }}</p>
+                {% if wish.desired_price %}
+                  <p class="text-sm text-gray-600 mt-1">¥{{ wish.desired_price }}〜</p>
+                {% endif %}
+              </div>
+              <button class="ml-4 flex items-center bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-full text-sm">
+                <!-- ギフトアイコン例 -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 12v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8m16 0L12 3 4 12m16 0H4" />
+                </svg>
+                このギフトを贈る
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-gray-500">公開中のアイテムはありません。</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+

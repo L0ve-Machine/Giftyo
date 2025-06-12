@@ -1,0 +1,34 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Giftyo{% endblock %}</title>
+  {% load static %}
+  <!-- Tailwind CSS（npmでビルド済みの styles.css を static/css/dist/ に配置） -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- ヘッダー -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-md mx-auto px-4 py-3">
+      <a href="{% url 'fan:home' %}" class="text-2xl font-bold text-primary">Giftyo</a>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="max-w-md mx-auto px-4 py-4">
+    {% block content %}
+    <!-- 各ページ固有のコンテンツがここに入る -->
+    {% endblock %}
+  </main>
+
+  <!-- フッター -->
+  <footer class="max-w-md mx-auto px-4 py-3 text-center text-sm text-gray-500">
+    &copy; 2025 Giftyo
+  </footer>
+
+</body>
+</html>
