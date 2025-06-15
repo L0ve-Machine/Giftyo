@@ -69,30 +69,54 @@ class WishItem(models.Model):
         return f"{self.product_name} ({self.influencer.display_name})"
 
 
-
 class Gift(models.Model):
     """インフルエンサー宛のギフト通知モデル"""
-    sender_name = models.CharField(
+    sender_name     = models.CharField(
         '送信者名',
         max_length=100,
         help_text='ギフトを送った方のお名前を入力してください'
     )
-    to_profile = models.ForeignKey(
-        'Influencer',
+    to_profile      = models.ForeignKey(
+        Influencer,
         on_delete=models.CASCADE,
         related_name='received_gifts',
         verbose_name='受信インフルエンサー'
     )
-    message = models.TextField('メッセージ', blank=True)
-    is_read = models.BooleanField('既読フラグ', default=False)
-    created_at = models.DateTimeField('送信日時', auto_now_add=True)
+    wish_item       = models.ForeignKey(
+        WishItem,
+        on_delete=models.CASCADE,
+        related_name='gifts',
+        verbose_name='対象WishItem',
+        null=True,    # 既存レコード用に NULL を許容
+        blank=True
+    )
+    tracking_number = models.CharField(
+        '追跡番号',
+        max_length=100,
+    )
+    sent_date       = models.DateField(
+        '送付日',
+        null=True,
+        blank=True,
+    )
+    message         = models.TextField(
+        'メッセージ',
+        blank=True
+    )
+    is_read         = models.BooleanField(
+        '既読フラグ',
+        default=False
+    )
+    created_at      = models.DateTimeField(
+        '送信日時',
+        auto_now_add=True
+    )
 
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
         return f"{self.sender_name} → {self.to_profile.display_name} @ {self.created_at:%Y-%m-%d %H:%M}"
-
 
 
 # influencer/models.py

@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db802e20-4e4f-4553-8ca5-83d4429cca8d" name="変更" comment="" />
+    <list default="true" id="db802e20-4e4f-4553-8ca5-83d4429cca8d" name="変更" comment="">
+      <change afterPath="$PROJECT_DIR$/influencer/migrations/0011_alter_gift_wish_item_null.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/templates/fan/gift_notify.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/gift_notify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/templates/fan/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/templates/fan/payment_summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/payment_summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/fan/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fan/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/gift_notify.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/urls.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,11 +26,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
-        <option value="Python Script" />
         <option value="CSS File" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -29,21 +44,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "django.template.preview.state": "SHOW_EDITOR",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\theme\static_src" />
@@ -105,6 +121,12 @@
       <workItem from="1749218850553" duration="13000" />
       <workItem from="1749393730528" duration="7000" />
       <workItem from="1749629213458" duration="14402000" />
+      <workItem from="1749724854524" duration="869000" />
+      <workItem from="1749729866178" duration="98000" />
+      <workItem from="1749738168569" duration="3539000" />
+      <workItem from="1749931425928" duration="1468000" />
+      <workItem from="1749979127881" duration="93000" />
+      <workItem from="1749979258212" duration="9150000" />
     </task>
     <servers />
   </component>

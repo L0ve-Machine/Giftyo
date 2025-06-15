@@ -1,58 +1,61 @@
-<!-- templates/fan/payment_summary.html -->
+{# fan/templates/fan/payment_summary.html #}
 {% extends 'base.html' %}
-{% block title %}ギフトの準備が整います | Giftyo{% endblock %}
+{% load static humanize %}
 
+{% block title %}ギフトの準備が整います | Giftyo{% endblock %}
 {% block content %}
-  <h2 class="text-xl font-semibold text-gray-800 mb-2">🎁 ギフトの準備が整います</h2>
-  <p class="text-sm text-gray-600 mb-6">あとは、届けるまでです。</p>
+<div class="max-w-md mx-auto my-8 bg-white rounded-2xl shadow-lg overflow-hidden text-gray-800">
+  <!-- ヘッダー -->
+  <div class="px-6 py-4 border-b">
+    <h2 class="flex items-center text-xl font-semibold">
+      <span class="mr-2">🎁</span>ギフトの準備が整います
+    </h2>
+    <p class="text-sm text-gray-500 mt-1">あとは、届けるまでにできます。</p>
+  </div>
 
   <!-- 内訳リスト -->
-  <div class="bg-white rounded-lg shadow p-4 mb-6 space-y-4">
-    <!-- 配送費用 -->
-    <div class="flex justify-between">
-      <span class="text-gray-700">◯◯さんへ郵送費用</span>
-      <span class="font-medium text-gray-800">¥{{ shipping_fee }}</span>
-    </div>
-    <!-- 匿名転送手数料 -->
-    <div class="flex justify-between">
-      <span class="text-gray-700">匿名転送手数料</span>
-      <span class="font-medium text-gray-800">¥{{ anonymous_fee }}</span>
-    </div>
-    <!-- ラッピング代 -->
-    <div class="flex justify-between">
-      <span class="text-gray-700">ラッピング代（{{ wrapping_option }}）</span>
-      <span class="font-medium text-gray-800">¥{{ wrapping_fee }}</span>
-    </div>
-    <!-- メッセージカード -->
-    <div class="flex justify-between">
-      <span class="text-gray-700">メッセージカード</span>
-      <span class="font-medium text-gray-800">¥{{ message_card_fee }}</span>
-    </div>
-    <!-- 決済手数料 -->
-    <div class="flex justify-between">
-      <span class="text-gray-700">決済手数料</span>
-      <span class="font-medium text-gray-800">¥{{ payment_fee }}</span>
-    </div>
+  <ul class="px-6 py-4 space-y-3 text-sm">
+    <li class="flex justify-between">
+      <span>◯◯さんへ郵送費用</span>
+      <span class="font-medium">¥{{ shipping_fee|intcomma }}</span>
+    </li>
+    <li class="flex justify-between">
+      <span>匿名転送手数料</span>
+      <span class="font-medium">¥{{ anonymous_fee|intcomma }}</span>
+    </li>
+    <li class="flex justify-between">
+      <span>ラッピング代（{{ wrapping_option }}）</span>
+      <span class="font-medium">¥{{ wrapping_fee|intcomma }}</span>
+    </li>
+    <li class="flex justify-between">
+      <span>メッセージカード</span>
+      <span class="font-medium">¥{{ message_card_fee|intcomma }}</span>
+    </li>
+    <li class="flex justify-between">
+      <span>決済手数料</span>
+      <span class="font-medium">¥{{ payment_fee|intcomma }}</span>
+    </li>
+  </ul>
 
-    <!-- 合計行 -->
-    <div class="flex justify-between border-t border-gray-200 pt-4">
-      <span class="text-lg font-semibold text-gray-800">合計</span>
-      <span class="text-lg font-semibold text-gray-800">¥{{ total_amount }}</span>
-    </div>
+  <!-- 合計 -->
+  <div class="px-6 py-4 border-t flex justify-between items-center">
+    <span class="text-lg font-semibold">合計</span>
+    <span class="text-lg font-semibold">¥{{ total_amount|intcomma }} <small class="text-xs text-gray-500">(税込)</small></span>
   </div>
 
-  <!-- この内容でギフトを贈る ボタン -->
-  <button
-    onclick="location.href='{% url 'fan:confirm_payment' gift_id=gift.id %}'"
-    class="w-full py-3 bg-primary text-white font-medium rounded-lg text-base hover:bg-primary-dark transition mb-6">
-    この内容でギフトを贈る
-  </button>
-
-  <!-- カードブランドロゴ（グレー＆薄めに表示） -->
-  <div class="flex justify-center items-center space-x-4">
-    <img src="{% static 'images/visa-gray.png' %}" alt="Visa" class="w-12 opacity-50">
-    <img src="{% static 'images/mastercard-gray.png' %}" alt="Mastercard" class="w-12 opacity-50">
-    <img src="{% static 'images/jcb-gray.png' %}" alt="JCB" class="w-12 opacity-50">
-    <!-- 必要に応じて他のブランドロゴを追加 -->
+  <!-- アクションボタン -->
+  <div class="px-6 py-4">
+    <a href="{% url 'fan:thank_you' %}"
+       class="block w-full py-3 bg-primary text-white text-center font-medium rounded-xl hover:bg-primary-dark transition">
+      この内容でギフトを贈る
+    </a>
   </div>
+
+  <!-- カードロゴ -->
+  <div class="px-6 pb-6 flex justify-center space-x-4 opacity-50">
+    <img src="{% static 'images/visa-gray.png' %}" alt="Visa" class="w-8">
+    <img src="{% static 'images/mastercard-gray.png' %}" alt="Mastercard" class="w-8">
+    <img src="{% static 'images/jcb-gray.png' %}" alt="JCB" class="w-8">
+  </div>
+</div>
 {% endblock %}

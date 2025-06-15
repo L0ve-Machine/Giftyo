@@ -1,22 +1,76 @@
-<!-- templates/fan/home.html -->
+{# templates/fan/home.html #}
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}インフルエンサー一覧 | Giftyo{% endblock %}
+
 {% block content %}
+  {# ——— 名前で検索 ——— #}
+  <form method="get" class="mb-4 flex">
+    <input
+      type="text"
+      name="q"
+      value="{{ request.GET.q|default:'' }}"
+      placeholder="インフルエンサー名で検索"
+      class="flex-1 px-3 py-2 border rounded-l-lg focus:outline-none"
+    />
+    <button
+      type="submit"
+      class="px-4 py-1 bg-orange-200 text-white rounded-r-lg hover:bg-orange-300 transition"
+    >
+      検索
+    </button>
+  </form>
+
+  {# ——— ランダム3名表示 ——— #}
+  {% if random_influencers %}
+    <h2 class="text-lg font-medium text-gray-700 mb-2">おすすめのインフルエンサー</h2>
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      {% for inf in random_influencers %}
+        <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
+           class="block bg-white rounded-lg shadow p-3 hover:shadow-md transition">
+          <div class="h-20 mb-2 overflow-hidden rounded-full mx-auto">
+            {% if inf.profile_image %}
+              <img
+                src="{{ inf.profile_image.url }}"
+                alt="{{ inf.display_name }}"
+                class="object-cover w-full h-full"
+              />
+            {% else %}
+              <img
+                src="{% static 'images/default-avatar.png' %}"
+                alt="デフォルトアバター"
+                class="object-cover w-full h-full"
+              />
+            {% endif %}
+          </div>
+          <p class="text-center text-sm font-medium">{{ inf.display_name }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {# ——— インフルエンサー一覧 ——— #}
   <h1 class="text-xl font-semibold text-gray-800 mb-4">インフルエンサー一覧</h1>
   <div class="space-y-4">
     {% for inf in influencers %}
       <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
          class="block bg-white rounded-lg shadow p-4 flex items-center space-x-4 hover:shadow-md transition">
-        <!-- サムネイル画像があれば表示 -->
-        {% if inf.profile_image_url %}
+        {% if inf.profile_image %}
           <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-            <img src="{{ inf.profile_image_url }}"
-                 alt="{{ inf.display_name }}"
-                 class="object-cover w-full h-full">
+            <img
+              src="{{ inf.profile_image.url }}"
+              alt="{{ inf.display_name }}"
+              class="object-cover w-full h-full"
+            />
           </div>
         {% else %}
           <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
-            <span class="text-sm">No</span>
+            <img
+              src="{% static 'images/default-avatar.png' %}"
+              alt="デフォルトアバター"
+              class="w-6 h-6"
+            />
           </div>
         {% endif %}
 
@@ -26,10 +80,10 @@
             <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ inf.bio }}</p>
           {% endif %}
         </div>
-        <!-- 右矢印アイコン -->
+
         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 5l7 7-7 7" />
+                d="M9 5l7 7-7 7"/>
         </svg>
       </a>
     {% empty %}
