@@ -1,0 +1,41 @@
+{% extends 'manage/base.html' %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">🎁 ギフト管理</h2>
+<div class="overflow-x-auto bg-white border rounded-lg shadow-sm">
+  <table class="w-full text-sm">
+    <thead class="bg-gray-50 border-b">
+      <tr>
+        <th class="px-4 py-2 text-left">日付</th>
+        <th class="px-4 py-2 text-left">インフルエンサー</th>
+        <th class="px-4 py-2 text-left">商品名</th>
+        <th class="px-4 py-2 text-left">追跡番号</th>
+        <th class="px-4 py-2 text-left">ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for gift in gifts %}
+      <tr class="hover:bg-gray-50">
+        <td class="px-4 py-2">{{ gift.sent_date|date:"Y/m/d" }}</td>
+        <td class="px-4 py-2">{{ gift.to_profile.display_name }}</td>
+        <td class="px-4 py-2">
+          {% if gift.wish_item %}
+            {{ gift.wish_item.product_name }}
+          {% else %}
+            （なし）
+          {% endif %}
+        </td>
+        <td class="px-4 py-2">{{ gift.tracking_number }}</td>
+        <td class="px-4 py-2 {% if gift.is_read %}text-blue-600{% else %}text-gray-500{% endif %}">
+          {% if gift.is_read %}到着済{% else %}未読{% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="px-4 py-2 text-center text-gray-400">ギフトはまだありません。</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

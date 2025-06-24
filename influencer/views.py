@@ -1,5 +1,3 @@
-# influencer/views.py
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Influencer, WishItem, Gift
@@ -8,6 +6,7 @@ from core.models import WarehouseInfo
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
 from django.contrib import messages
+
 
 @login_required
 def influencer_profile_view(request):
@@ -51,7 +50,6 @@ def gift_mark_read_view(request, pk):
     return redirect('influencer:dashboard')
 
 
-
 @login_required
 def shipping_address_view(request):
     profile = request.user.influencer_profile
@@ -63,7 +61,7 @@ def shipping_address_view(request):
     if request.method == 'POST':
         form = ShippingAddressForm(request.POST, instance=address)
         if form.is_valid():
-            shipping        = form.save(commit=False)
+            shipping = form.save(commit=False)
             shipping.influencer = profile
             shipping.save()
             # 成功メッセージをセットしてリダイレクト
@@ -94,7 +92,7 @@ def influencer_dashboard_view(request):
         is_read=False
     ).order_by('-created_at')
 
-    # WishItem 一覧
+    # WishItem 一覧（※ダッシュボードでは自分用なので全件表示）
     wish_list = profile.wish_items.all().order_by('order', '-created_at')
 
     return render(request, 'influencer/dashboard.html', {
@@ -176,22 +174,26 @@ def wishitem_delete_view(request, pk):
     })
 
 
-
 def influencer_public_profile(request, slug):
     """
     公開用プロフィールページ（ファン向け）
     URL: /u/<slug>/
-      ・プロフィール情報（アイコン／表示名／自己紹介／SNSリンク）
-      ・公開設定(is_public=True)かつ is_visible=True の WishItem 一覧 を表示
-      ・WarehouseInfo などをテンプレートに渡す例
+
+    - プロフィール情報（アイコン／表示名／自己紹介／SNSリンク）
+    - 公開設定(is_public=True) かつ is_visible=True の WishItem 一覧
+      ※ gifts__isnull=True で「まだ贈られていないもの」だけを表示
+    - WarehouseInfo をテンプレートに渡す
     """
     influencer = get_object_or_404(Influencer, slug=slug, is_public=True)
 
-    # ダッシュボードと同じく、全WishItemを取得（並び順: order → -created_at）
-    wish_items = influencer.wish_items.all().order_by('order', '-created_at')
-    # ※公開フラグで絞りたい場合は .filter(is_visible=True) を追加してください
+    # ── 公開中 & 未ギフトのみ取得 ──
+    wish_items = (
+        influencer.wish_items
+        .filter(is_visible=True, gifts__isnull=True)  # ★ 追加フィルタ
+        .order_by('order', '-created_at')
+    )
 
-    # core アプリの WarehouseInfo を取得（例として最初の1件）
+    # 倉庫情報（例: 1 件目を取得）
     warehouse = WarehouseInfo.objects.first()
 
     return render(request, 'fan/influencer_public.html', {
@@ -199,7 +201,6 @@ def influencer_public_profile(request, slug):
         'wish_items': wish_items,
         'warehouse': warehouse,
     })
-
 
 
 def gift_notify(request, slug):
@@ -214,3 +215,12 @@ def gift_notify(request, slug):
     })
 
 
+from django.views.generic import CreateView
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+
+
+class InfluencerSignUpView(CreateView):
+    form_class = UserCreationForm  # 標準フォーム
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('login')  # 登録完了後ログインフォームへ

@@ -1,4 +1,4 @@
-# core/admin.py
+# core/manage.py
 from django.contrib import admin
 from .models import WarehouseInfo
 

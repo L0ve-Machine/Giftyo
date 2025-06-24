@@ -1,0 +1,23 @@
+{% extends 'manage/base.html' %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">📊 ダッシュボード</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="bg-white p-6 rounded-lg border shadow-sm">
+    <p class="text-sm text-gray-600">総ギフト数</p>
+    <p class="text-2xl font-bold">{{ total_gifts }}</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg border shadow-sm">
+    <p class="text-sm text-gray-600">アクティブインフルエンサー</p>
+    <p class="text-2xl font-bold">{{ active_influencers }}</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg border shadow-sm">
+    <p class="text-sm text-gray-600">ギフト付き商品数</p>
+    <p class="text-2xl font-bold">{{ gifts_with_product }}</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg border shadow-sm">
+    <p class="text-sm text-gray-600">平均ギフト数（1人あたり）</p>
+    <p class="text-2xl font-bold">{{ average_gift_per_influencer }}</p>
+  </div>
+</div>
+{% endblock %}
+

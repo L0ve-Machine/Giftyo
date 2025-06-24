@@ -1,4 +1,4 @@
-# influencer/admin.py
+# influencer/manage.py
 from django.contrib import admin
 from .models import Influencer, WishItem, Gift
 

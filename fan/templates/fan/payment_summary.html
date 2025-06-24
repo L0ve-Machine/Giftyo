@@ -1,22 +1,26 @@
 {# fan/templates/fan/payment_summary.html #}
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static humanize %}
 
 {% block title %}ギフトの準備が整います | Giftyo{% endblock %}
+
 {% block content %}
 <div class="max-w-md mx-auto my-8 bg-white rounded-2xl shadow-lg overflow-hidden text-gray-800">
-  <!-- ヘッダー -->
+
+  {# ── ヘッダー ── #}
   <div class="px-6 py-4 border-b">
     <h2 class="flex items-center text-xl font-semibold">
       <span class="mr-2">🎁</span>ギフトの準備が整います
     </h2>
-    <p class="text-sm text-gray-500 mt-1">あとは、届けるまでにできます。</p>
+    <p class="text-sm text-gray-500 mt-1">
+      あとは決済するだけで {{ influencer.display_name }} さんへ通知されます。
+    </p>
   </div>
 
-  <!-- 内訳リスト -->
+  {# ── 内訳リスト ── #}
   <ul class="px-6 py-4 space-y-3 text-sm">
     <li class="flex justify-between">
-      <span>◯◯さんへ郵送費用</span>
+      <span>{{ influencer.display_name }} さんへ郵送費用</span>
       <span class="font-medium">¥{{ shipping_fee|intcomma }}</span>
     </li>
     <li class="flex justify-between">
@@ -37,25 +41,45 @@
     </li>
   </ul>
 
-  <!-- 合計 -->
+  {# ── 合計 ── #}
   <div class="px-6 py-4 border-t flex justify-between items-center">
     <span class="text-lg font-semibold">合計</span>
-    <span class="text-lg font-semibold">¥{{ total_amount|intcomma }} <small class="text-xs text-gray-500">(税込)</small></span>
+    <span class="text-lg font-semibold">
+      ¥{{ total_amount|intcomma }} <small class="text-xs text-gray-500">(税込)</small>
+    </span>
   </div>
 
-  <!-- アクションボタン -->
+  {# ── アクションボタン ── #}
   <div class="px-6 py-4">
-    <a href="{% url 'fan:thank_you' %}"
-       class="block w-full py-3 bg-primary text-white text-center font-medium rounded-xl hover:bg-primary-dark transition">
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <button
+      id="pay-btn"
+      class="block w-full py-3 bg-blue-600 text-white text-center font-medium rounded-xl hover:bg-blue-700 transition"
+    >
       この内容でギフトを贈る
-    </a>
+    </button>
+
+    <script>
+      // 公開可能キーを Django から受け取る
+      const stripe = Stripe("{{ STRIPE_PUBLISHABLE_KEY|escapejs }}");
+
+      document.getElementById("pay-btn").addEventListener("click", () => {
+        fetch("{% url 'fan:create_checkout_session' influencer.slug gift.id %}", {
+          method: "POST",
+          headers: {"X-CSRFToken": "{{ csrf_token }}"},
+        })
+        .then(res => res.json())
+        .then(data => stripe.redirectToCheckout({ sessionId: data.id }))
+        .catch(() => alert("決済セッションの作成に失敗しました"));
+      });
+    </script>
   </div>
 
-  <!-- カードロゴ -->
-  <div class="px-6 pb-6 flex justify-center space-x-4 opacity-50">
-    <img src="{% static 'images/visa-gray.png' %}" alt="Visa" class="w-8">
-    <img src="{% static 'images/mastercard-gray.png' %}" alt="Mastercard" class="w-8">
-    <img src="{% static 'images/jcb-gray.png' %}" alt="JCB" class="w-8">
+   {# ── カードロゴ ── #}
+  <div class="px-6 pb-6 flex justify-center opacity-70">
+    <img src="{% static 'images/card_5brand.png' %}" alt="Brands" class="h-6">
   </div>
 </div>
 {% endblock %}
+
