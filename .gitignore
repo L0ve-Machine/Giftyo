@@ -1,0 +1,23 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ---- 仮想環境 ----
+env/
+venv/
+.venv/
+
+# ---- エディタ / OS ----
+.DS_Store
+.idea/
+.vscode/
+
+# ---- Django: collectstatic 出力先 ----
+staticfiles/
+# もし MEDIA_ROOT を S3 など外部にしてない場合は
+media/
+
+# ---- 環境変数ファイル ----
+.env
+".env" 
