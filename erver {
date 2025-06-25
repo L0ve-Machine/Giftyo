@@ -1,0 +1,12 @@
+[0;1;32m●[0m giftyo.service - Giftyo Django (Gunicorn)
+     Loaded: loaded (]8;;file://x162-43-49-201/etc/systemd/system/giftyo.service\/etc/systemd/system/giftyo.service]8;;\; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;32mactive (running)[0m since Thu 2025-06-26 01:04:28 JST; 39ms ago
+ Invocation: 722a98318fff40689b60409ef0e4d143
+   Main PID: 19861 (gunicorn)
+      Tasks: 1[0;38;5;245m (limit: 2262)[0m
+     Memory: 3.6M (peak: 3.6M)
+        CPU: 26ms
+     CGroup: /system.slice/giftyo.service
+             └─[0;38;5;245m19861 /root/apps/Giftyo/venv/bin/python3 /root/apps/Giftyo/venv/bin/gunicorn config.wsgi:application --bind 127.0.0.1:8000[0m
+
+ 6月 26 01:04:28 x162-43-49-201 systemd[1]: Started giftyo.service - Giftyo Django (Gunicorn).
