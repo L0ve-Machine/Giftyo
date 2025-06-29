@@ -20,4 +20,6 @@ media/
 
 # ---- 環境変数ファイル ----
 .env
-".env" 
+".env"
+
+db.sqlite3
