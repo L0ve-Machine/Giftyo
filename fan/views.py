@@ -40,31 +40,23 @@ def influencer_list(request):
     q = request.GET.get('q', '').strip()
 
     # ———————— ベースクエリ ————————
-    # 公開フラグが立っていて、かつ slug が空でないものだけ
-    qs = (Influencer.objects
-          .filter(is_public=True)
-          .exclude(slug__isnull=True)
-          .exclude(slug=''))
+    base_qs = Influencer.objects.filter(is_public=True)
 
     # ———————— 検索絞り込み ————————
     if q:
-        qs = qs.filter(display_name__icontains=q)
+        base_qs = base_qs.filter(display_name__icontains=q)
 
-    # ———————— ランダム3名取得 ————————
-    # ここでは既に slug があるものだけなので、URL 生成時に安全
-    random_influencers = qs.order_by('?')[:3]
+    # ———————— slug が空のものを除外してランダム3名取得 ————————
+    random_influencers = (base_qs
+                          .exclude(slug__isnull=True)
+                          .exclude(slug='')
+                          .order_by('?')[:3])
 
-    # デバッグログ（任意）
-    logger.debug(
-        "Search q=%r → total=%d, random=%s",
-        q,
-        qs.count(),
-        list(random_influencers.values_list('display_name', flat=True))
-    )
+    # ———————— (必要なら一覧も slug ありに) ————————
+    influencers = base_qs.exclude(slug__exact='')
 
-    # ———————— テンプレートへ渡す ————————
     return render(request, 'fan/home.html', {
-        'influencers': qs,                 # 検索済み or 全件（slug あり）
+        'influencers': influencers,
         'random_influencers': random_influencers,
         'q': q,
     })
