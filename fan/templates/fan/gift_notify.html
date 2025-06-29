@@ -3,20 +3,48 @@
 {% block content %}
 <div class="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
   <div class="w-full max-w-md bg-white rounded-xl shadow-md mt-6 mb-8 overflow-hidden">
+    <!-- ヘッダー -->
     <div class="flex items-center px-4 py-3 border-b">
       <a href="javascript:history.back()" class="text-gray-600 hover:text-gray-900">
         <!-- 戻るアイコン -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
       </a>
       <span class="ml-2 text-lg font-medium">ギフトを送る</span>
     </div>
 
+    <!-- コンテンツ -->
     <div class="px-6 py-4">
-      <p class="text-center mb-4">
-        {{ influencer.display_name }} さんにギフトをお届けしたい方はこちらのフォームよりお知らせください。
+      <!-- ギフト文 -->
+      <p class="text-left mb-4">
+        {{ influencer.display_name }} さんへのギフトです。<br>
+        ギフト購入後、Giftyo倉庫へ郵送して下さい。<br>
+        Giftyoスタッフが責任を持って{{ influencer.display_name }}さんにお届けします。
       </p>
 
+      <!-- お届け先ブロック -->
+      <div class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+        <div class="flex justify-between items-start">
+          <div class="text-sm text-gray-700 leading-relaxed">
+            お届け先（Giftyo倉庫）<br>
+            〒123-4567<br>
+            東京都〇〇区〇1-2-3<br>
+            Giftyo倉庫（宛名：〇〇）
+          </div>
+          <button
+            id="copyAddressBtn"
+            class="ml-4 px-3 py-1 bg-accent-purple hover:bg-accent-dark text-white rounded-md text-sm"
+          >
+            宛先をコピー
+          </button>
+        </div>
+      </div>
+
+      <!-- エラーバナー -->
       <p id="errorBanner" class="text-red-500 mb-4 hidden">未入力の箇所があります。</p>
 
+      <!-- ギフト送信フォーム -->
       <form id="giftForm" method="post" novalidate>
         {% csrf_token %}
         <!-- お名前 -->
@@ -25,8 +53,11 @@
             お名前 <span class="text-red-500">*</span>
           </label>
           <input
-            type="text" id="sender_name" name="fan_nickname"
-            required oninvalid="this.setCustomValidity('お名前を入力してください')"
+            type="text"
+            id="sender_name"
+            name="fan_nickname"
+            required
+            oninvalid="this.setCustomValidity('お名前を入力してください')"
             oninput="this.setCustomValidity('')"
             placeholder="例：山田花子"
             class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-400"
@@ -40,8 +71,11 @@
             追跡番号 <span class="text-red-500">*</span>
           </label>
           <input
-            type="text" id="tracking_number" name="tracking_number"
-            required oninvalid="this.setCustomValidity('追跡番号を入力してください')"
+            type="text"
+            id="tracking_number"
+            name="tracking_number"
+            required
+            oninvalid="this.setCustomValidity('追跡番号を入力してください')"
             oninput="this.setCustomValidity('')"
             placeholder="例：JP1234567890"
             class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-400"
@@ -49,17 +83,19 @@
           >
         </div>
 
-        <!-- メッセージ -->
+        <!-- 応援メッセージ -->
         <div class="mb-4">
           <label for="anonymous_message" class="block text-gray-700 mb-1">応援メッセージ（任意）</label>
           <textarea
-            id="anonymous_message" name="anonymous_message" rows="3"
+            id="anonymous_message"
+            name="anonymous_message"
+            rows="3"
             placeholder="例：いつも応援しています！"
             class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-400"
           >{{ anonymous_message|default:'' }}</textarea>
         </div>
 
-        <!-- 送信ボタン（色を標準色に変更） -->
+        <!-- 送信ボタン -->
         <button
           type="submit"
           class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -71,13 +107,29 @@
   </div>
 </div>
 
+<!-- スクリプト -->
 <script>
-document.getElementById('giftForm').addEventListener('submit', function(e) {
-  if (!this.checkValidity()) {
-    e.preventDefault();
-    this.querySelectorAll('input,textarea').forEach(el=>el.setCustomValidity(''));
-    document.getElementById('errorBanner').classList.remove('hidden');
-  }
-});
+  // フォームのバリデーション
+  document.getElementById('giftForm').addEventListener('submit', function(e) {
+    if (!this.checkValidity()) {
+      e.preventDefault();
+      this.querySelectorAll('input,textarea').forEach(el => el.setCustomValidity(''));
+      document.getElementById('errorBanner').classList.remove('hidden');
+    }
+  });
+
+  // 住所コピー機能
+  document.getElementById('copyAddressBtn').addEventListener('click', function() {
+    const address =
+      'お届け先（Giftyo倉庫）\n' +
+      '〒123-4567\n' +
+      '東京都〇〇区〇1-2-3\n' +
+      'Giftyo倉庫（宛名：〇〇）';
+    navigator.clipboard.writeText(address).then(() => {
+      this.textContent = 'コピーしました';
+      setTimeout(() => this.textContent = '宛先をコピー', 2000);
+    });
+  });
 </script>
 {% endblock %}
+

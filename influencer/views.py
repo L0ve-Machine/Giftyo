@@ -8,6 +8,16 @@ from .forms import ShippingAddressForm
 from django.contrib import messages
 
 
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from .forms import CustomUserCreationForm  # 同じアプリなのでこれでOK
+
+class RegisterView(CreateView):
+    form_class = CustomUserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('login')
+
+
 @login_required
 def influencer_profile_view(request):
     """

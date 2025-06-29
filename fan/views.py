@@ -23,13 +23,13 @@ def confirm_payment(request, slug, gift_id):
     return render(request, "fan/payment_summary.html", {
         "influencer": influencer,
         "gift":       gift,
-        "shipping_fee":    500,
-        "anonymous_fee":   100,
+        "shipping_fee":    1500,
+        "anonymous_fee":   1200,
         "wrapping_option": "スタンダード",
-        "wrapping_fee":    200,
-        "message_card_fee":150,
-        "payment_fee":     50,
-        "total_amount":    1000,          # 例
+        "wrapping_fee":    500,
+        "message_card_fee":0,
+        "payment_fee":     130,
+        "total_amount":    3330,
         "STRIPE_PUBLISHABLE_KEY": settings.STRIPE_PUBLISHABLE_KEY,  # ★追加
     })
 
