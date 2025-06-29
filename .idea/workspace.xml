@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="db802e20-4e4f-4553-8ca5-83d4429cca8d" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Giftyo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Giftyo/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fan/templates/fan/gift_notify.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/gift_notify.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fan/templates/fan/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fan/templates/fan/influencer_public.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/influencer_public.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fan/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fan/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/influencer/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/influencer/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/influencer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +134,7 @@
       <workItem from="1750877586668" duration="3673000" />
       <workItem from="1750953106392" duration="7064000" />
       <workItem from="1751155683669" duration="5152000" />
-      <workItem from="1751204186963" duration="5461000" />
+      <workItem from="1751204186963" duration="6309000" />
     </task>
     <servers />
   </component>

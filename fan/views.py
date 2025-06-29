@@ -40,14 +40,18 @@ def influencer_list(request):
     q = request.GET.get('q', '').strip()
 
     # ———————— ベースクエリ ————————
-    # 公開フラグが立っているものだけ絞る
-    qs = Influencer.objects.filter(is_public=True)
+    # 公開フラグが立っていて、かつ slug が空でないものだけ
+    qs = (Influencer.objects
+          .filter(is_public=True)
+          .exclude(slug__isnull=True)
+          .exclude(slug=''))
 
     # ———————— 検索絞り込み ————————
     if q:
         qs = qs.filter(display_name__icontains=q)
 
     # ———————— ランダム3名取得 ————————
+    # ここでは既に slug があるものだけなので、URL 生成時に安全
     random_influencers = qs.order_by('?')[:3]
 
     # デバッグログ（任意）
@@ -60,10 +64,11 @@ def influencer_list(request):
 
     # ———————— テンプレートへ渡す ————————
     return render(request, 'fan/home.html', {
-        'influencers': qs,                 # 検索済み or 全件
+        'influencers': qs,                 # 検索済み or 全件（slug あり）
         'random_influencers': random_influencers,
-        'q': q,                            # テンプレートで再表示したい場合
+        'q': q,
     })
+
 
 
 
