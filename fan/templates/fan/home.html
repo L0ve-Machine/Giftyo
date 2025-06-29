@@ -33,13 +33,14 @@
               {% if inf.profile_image %}
                 <img src="{{ inf.profile_image.url }}" alt="{{ inf.display_name }}" class="object-cover w-full h-full" />
               {% else %}
-                <img src="{% static 'images/default-avatar.png' %}" alt="{{ inf.display_name }}（デフォルト画像）" class="object-cover w-full h-full" />
+                <img src="{% static 'images/default-avatar.png' %}"
+                     alt="{{ inf.display_name }}（デフォルト画像）"
+                     class="object-cover w-full h-full" />
               {% endif %}
             </div>
             <p class="text-center text-sm font-semibold text-black">{{ inf.display_name }}</p>
           </a>
         {% else %}
-          <!-- slug がない場合はリンク化せずに表示だけ -->
           <div class="block bg-white border rounded-lg shadow p-3 text-gray-400">
             {{ inf.display_name }}（URL 未設定）
           </div>
@@ -66,7 +67,9 @@
             </div>
           {% else %}
             <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
-              <img src="{% static 'images/default-avatar.png' %}" alt="{{ inf.display_name }}（デフォルト画像）" class="w-6 h-6" />
+              <img src="{% static 'images/default-avatar.png' %}"
+                   alt="{{ inf.display_name }}（デフォルト画像）"
+                   class="w-6 h-6" />
             </div>
           {% endif %}
 
