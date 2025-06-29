@@ -22,10 +22,11 @@
   </form>
 
   <!-- ランダムインフルエンサー表示 -->
-    {% if random_influencers %}
-      <h2 class="text-lg font-bold text-black mb-3">おすすめのインフルエンサー</h2>
-      <div class="grid grid-cols-3 gap-4 mb-6">
-        {% for inf in random_influencers %}
+  {% if random_influencers %}
+    <h2 class="text-lg font-bold text-black mb-3">おすすめのインフルエンサー</h2>
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      {% for inf in random_influencers %}
+        {% if inf.slug %}
           <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
              class="block bg-white border rounded-lg shadow p-3 hover:shadow-md transition">
             <div class="h-20 mb-2 overflow-hidden rounded-full mx-auto">
@@ -37,10 +38,15 @@
             </div>
             <p class="text-center text-sm font-semibold text-black">{{ inf.display_name }}</p>
           </a>
-        {% endfor %}
-      </div>
-    {% endif %}
-
+        {% else %}
+          <!-- slug がない場合はリンク化せずに表示だけ -->
+          <div class="block bg-white border rounded-lg shadow p-3 text-gray-400">
+            {{ inf.display_name }}（URL 未設定）
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
 
   <!-- 一覧見出し -->
   <h1 class="text-xl font-bold text-black mb-4">インフルエンサー一覧</h1>
@@ -48,35 +54,45 @@
   <!-- インフルエンサーリスト -->
   <div class="space-y-4">
     {% for inf in influencers %}
-      <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
-         class="block bg-white border rounded-lg shadow p-4 flex items-center space-x-4 hover:shadow-md transition">
-        {% if inf.profile_image %}
-          <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-            <img src="{{ inf.profile_image.url }}" alt="{{ inf.display_name }}" class="object-cover w-full h-full" />
-          </div>
-        {% else %}
-          <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
-            <img src="{% static 'images/default-avatar.png' %}" alt="{{ inf.display_name }}（デフォルト画像）" class="w-6 h-6" />
-          </div>
-        {% endif %}
-
-        <div class="flex-1">
-          <h2 class="text-base font-semibold text-black">{{ inf.display_name }}</h2>
-          {% if inf.bio %}
-            <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ inf.bio }}</p>
+      {% if inf.slug %}
+        <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
+           class="block bg-white border rounded-lg shadow p-4 flex items-center space-x-4 hover:shadow-md transition">
+      {% else %}
+        <div class="block bg-white border rounded-lg shadow p-4 flex items-center space-x-4 text-gray-400">
+      {% endif %}
+          {% if inf.profile_image %}
+            <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+              <img src="{{ inf.profile_image.url }}" alt="{{ inf.display_name }}" class="object-cover w-full h-full" />
+            </div>
+          {% else %}
+            <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+              <img src="{% static 'images/default-avatar.png' %}" alt="{{ inf.display_name }}（デフォルト画像）" class="w-6 h-6" />
+            </div>
           {% endif %}
-        </div>
 
-        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-        </svg>
-      </a>
+          <div class="flex-1">
+            <h2 class="text-base font-semibold text-black">{{ inf.display_name }}</h2>
+            {% if inf.bio %}
+              <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ inf.bio }}</p>
+            {% endif %}
+          </div>
+
+          {% if inf.slug %}
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          {% endif %}
+      {% if inf.slug %}
+        </a>
+      {% else %}
+        </div>
+      {% endif %}
     {% empty %}
       <p class="text-sm text-gray-500">現在、登録されたインフルエンサーはいません。</p>
     {% endfor %}
   </div>
 
-  <!-- ログインCTA（白背景に戻し、ボタンだけ目立たせる） -->
+  <!-- ログインCTA -->
   <div class="mt-10 mb-8 text-center">
     <a href="{% url 'login' %}"
        class="inline-block px-6 py-3 bg-accent-purple hover:bg-accent-dark text-white text-base font-bold rounded-md transition shadow-lg">
