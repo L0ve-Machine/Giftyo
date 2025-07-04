@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-5696+rj+37h1&_*l6^lbkmj=5!)qcu3i4&kd47)r)=*nz2(z#4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['giftyo.net', 'www.giftyo.net', '162.43.49.201']
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['giftyo.net', 'www.giftyo.net', '162.43.49.201']
+#ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Giftyo.urls'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -127,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     BASE_DIR / "theme" / "static",  # tailwind ビルド結果を収集対象に含める
