@@ -1,11 +1,12 @@
 <!-- templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Giftyo{% endblock %}</title>
-  {% load static %}
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -20,12 +21,29 @@
       }
     }
   </script>
+
+  <!-- 三本線アイコンのみ表示するためのカスタムCSS -->
+  <style>
+    /* WebKit系（Chrome, Safariなど）の▽マーカーを非表示 */
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    /* Firefoxのマーカーを非表示 */
+    summary::-moz-list-bullet {
+      font-size: 0;
+    }
+    /* 全体のリストスタイルを削除 */
+    summary {
+      list-style: none;
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-black font-sans">
 
   <!-- ヘッダー -->
   <header class="bg-transparent shadow-sm">
     <div class="max-w-md mx-auto px-4 py-3 flex items-center">
+      <!-- ロゴ -->
       <a href="{% url 'fan:home' %}" class="block">
         <img
           src="{% static 'images/giftyo.png' %}"
@@ -33,13 +51,49 @@
           class="h-10 w-auto"
         />
       </a>
+
+      <!-- ハンバーガーメニュー -->
+      <div class="ml-auto">
+        <details class="relative">
+          <summary class="cursor-pointer p-2 rounded hover:bg-gray-200 focus:outline-none focus:ring">
+            <!-- ただの三本線 -->
+            <div class="space-y-1">
+              <span class="block h-0.5 w-6 bg-gray-700"></span>
+              <span class="block h-0.5 w-6 bg-gray-700"></span>
+              <span class="block h-0.5 w-6 bg-gray-700"></span>
+            </div>
+          </summary>
+          <ul class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+            <li>
+              <a href="{% url 'fan:home' %}"
+                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                ホームへ
+              </a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'logout' %}"
+                   class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  ログアウト
+                </a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{% url 'login' %}"
+                   class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  ログイン
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </details>
+      </div>
     </div>
   </header>
 
   <!-- メインコンテンツ -->
   <main class="max-w-md mx-auto px-4 py-4">
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
   </main>
 
   <!-- フッター -->
@@ -49,3 +103,4 @@
 
 </body>
 </html>
+

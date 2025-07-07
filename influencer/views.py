@@ -188,29 +188,36 @@ def influencer_public_profile(request, slug):
     """
     公開用プロフィールページ（ファン向け）
     URL: /u/<slug>/
-
-    - プロフィール情報（アイコン／表示名／自己紹介／SNSリンク）
-    - 公開設定(is_public=True) かつ is_visible=True の WishItem 一覧
-      ※ gifts__isnull=True で「まだ贈られていないもの」だけを表示
-    - WarehouseInfo をテンプレートに渡す
     """
     influencer = get_object_or_404(Influencer, slug=slug, is_public=True)
 
     # ── 公開中 & 未ギフトのみ取得 ──
     wish_items = (
         influencer.wish_items
-        .filter(is_visible=True, gifts__isnull=True)  # ★ 追加フィルタ
+        .filter(is_visible=True, gifts__isnull=True)
         .order_by('order', '-created_at')
     )
 
-    # 倉庫情報（例: 1 件目を取得）
+    # 倉庫情報
     warehouse = WarehouseInfo.objects.first()
+
+    # SNSリンク用リスト（Noneは自動的に除外されるので、テンプレートでループ処理OK）
+    sns_urls = [
+        influencer.instagram_url,
+        influencer.twitter_url,
+        influencer.tiktok_url,
+        influencer.free_url1,
+        influencer.free_url2,
+    ]
 
     return render(request, 'fan/influencer_public.html', {
         'influencer': influencer,
         'wish_items': wish_items,
         'warehouse': warehouse,
+        'sns_urls': sns_urls,  # ←★ 追加ここ！
     })
+
+
 
 
 def gift_notify(request, slug):

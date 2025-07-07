@@ -6,50 +6,59 @@
 
 {% block content %}
 <div class="min-h-screen bg-gray-100 p-4 flex flex-col items-center">
-    <div class="w-full max-w-md bg-white rounded-xl shadow-md mt-6 mb-8 overflow-hidden">
-        {# ヘッダー（戻ると設定タイトル） #}
-        <div class="flex items-center px-4 py-3 border-b">
-            <a href="javascript:history.back()" class="text-gray-600 hover:text-gray-900">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M15 19l-7-7 7-7"/>
-                </svg>
-            </a>
-            <span class="ml-2 text-lg font-medium">設定</span>
+  <div class="w-full max-w-md bg-white rounded-xl shadow-md mt-6 mb-8 overflow-hidden">
+    <!-- ヘッダー -->
+    <div class="flex items-center px-4 py-3 border-b">
+      <a href="javascript:history.back()" class="text-gray-600 hover:text-gray-900">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 19l-7-7 7-7"/>
+        </svg>
+      </a>
+      <span class="ml-2 text-lg font-medium">設定</span>
+    </div>
+
+    <div class="px-6 py-4">
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {# ───── プロフィール画像 + プレビュー ───── #}
+        <div class="flex flex-col items-center mb-6">
+          <div class="mb-2 relative">
+            <!-- ファイル選択前/編集時に既存画像表示 -->
+            <img
+              id="profileImagePreview"
+              src="{% if profile and profile.profile_image %}{{ profile.profile_image.url }}{% endif %}"
+              alt="プロフィール画像"
+              class="w-20 h-20 rounded-full object-cover border-2 border-gray-300"
+              {% if not profile or not profile.profile_image %}style="display:none;"{% endif %}>
+            <!-- デフォルトプレースホルダー -->
+            <div
+              id="defaultProfilePlaceholder"
+              class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center border-2 border-gray-300"
+              {% if profile and profile.profile_image %}style="display:none;"{% endif %}>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5.121 17.804A10.97 10.97 0 0112 15c2.53 0 4.87.95
+                         6.879 2.804M15 11a3 3 0 116 0 3 3 0 01-6 0z" />
+              </svg>
+            </div>
+          </div>
+          <label class="mt-2 w-full">
+            <span
+              class="block w-full px-3 py-2 text-center bg-gray-200 hover:bg-gray-300 text-gray-700 rounded cursor-pointer text-sm">
+              画像を選択
+            </span>
+            {{ form.profile_image|add_class:"hidden" }}
+            {% for err in form.profile_image.errors %}
+              <p class="text-red-600 text-xs mt-1">{{ err }}</p>
+            {% endfor %}
+          </label>
+          <p class="mt-1 text-sm text-gray-500">※タップしてアップロード</p>
         </div>
-
-        <div class="px-6 py-4">
-            <form method="post" enctype="multipart/form-data" novalidate>
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-
-                {# プロフィール画像 + プレビュー #}
-                <div class="flex flex-col items-center mb-6">
-                    {% if profile and profile.profile_image %}
-                        <img src="{{ profile.profile_image.url }}" alt="プロフィール画像"
-                             class="w-20 h-20 rounded-full object-cover border-2 border-gray-300 mb-2">
-                    {% else %}
-                        <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5.121 17.804A10.97 10.97 0 0112 15c2.53 0 4.87.95 6.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                    {% endif %}
-                    <label class="mt-2 w-full">
-                        <span
-                            class="block w-full px-3 py-2 text-center bg-gray-200 hover:bg-gray-300 text-gray-700 rounded cursor-pointer text-sm">
-                            画像を選択
-                        </span>
-                        {{ form.profile_image|add_class:"hidden" }}
-                        {% for err in form.profile_image.errors %}
-                            <p class="text-red-600 text-xs mt-1">{{ err }}</p>
-                        {% endfor %}
-                    </label>
-                    <p class="mt-1 text-sm text-gray-500">※タップしてアップロード</p>
-                </div>
 
                 {# 表示名入力 #}
                 <div class="mb-4">
@@ -285,14 +294,29 @@
                     {% endfor %}
                 </div>
 
-                {# 保存ボタン #}
                 <button type="submit"
-                        class="w-full bg-orange-300 hover:bg-orange-400 text-white py-3 rounded mb-2">
-                    保存する
-                </button>
-
-            </form>
-        </div>
+                class="w-full bg-orange-300 hover:bg-orange-400 text-white py-3 rounded mb-2">
+          保存する
+        </button>
+      </form>
     </div>
+  </div>
 </div>
+
+{# ───── プレビュー用スクリプト ───── #}
+<script>
+  document.getElementById('id_profile_image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const preview = document.getElementById('profileImagePreview');
+      const placeholder = document.getElementById('defaultProfilePlaceholder');
+      preview.src = evt.target.result;
+      preview.style.display = 'block';
+      placeholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
 {% endblock %}

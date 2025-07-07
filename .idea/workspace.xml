@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db802e20-4e4f-4553-8ca5-83d4429cca8d" name="変更" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/influencer/templatetags/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Giftyo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Giftyo/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/templates/fan/influencer_public.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/influencer_public.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/profile_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/public_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/public_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/snippets/icons.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/snippets/icons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/url_icon.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templatetags/url_icon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +28,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -55,11 +65,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\genki\PycharmProjects\Giftyo\influencer\templatetags" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\static\images" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\core\templates" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\theme\static_src" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\theme\static_src\src" />
-      <recent name="C:\Users\genki\PycharmProjects\Giftyo\theme" />
     </key>
   </component>
   <component name="RunManager">
@@ -136,6 +146,11 @@
       <workItem from="1750953106392" duration="7064000" />
       <workItem from="1751155683669" duration="5152000" />
       <workItem from="1751204186963" duration="9319000" />
+      <workItem from="1751649015876" duration="5204000" />
+      <workItem from="1751688976984" duration="4824000" />
+      <workItem from="1751724683973" duration="3902000" />
+      <workItem from="1751821762982" duration="5215000" />
+      <workItem from="1751908445226" duration="1922000" />
     </task>
     <servers />
   </component>
