@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}すべてのインフルエンサー | Giftyo{% endblock %}
+
+{% block content %}
+  <!-- 検索フォーム -->
+  <form method="get" class="mb-6">
+    <div class="flex shadow rounded-lg overflow-hidden border border-gray-200">
+      <input
+        type="text"
+        name="q"
+        value="{{ q }}"
+        placeholder="インフルエンサー名で検索"
+        class="flex-1 px-3 py-2 text-black focus:outline-none border-none"
+      />
+      <button
+        type="submit"
+        class="px-4 py-2 bg-accent-purple hover:bg-accent-dark text-white font-bold"
+      >
+        検索
+      </button>
+    </div>
+  </form>
+
+  <h1 class="text-xl font-bold text-black mb-4">すべてのインフルエンサー</h1>
+  <div class="space-y-4 mb-8">
+    {% for inf in influencers %}
+      {% include 'fan/_snippet_influencer_card.html' with inf=inf size="small" %}
+    {% empty %}
+      <p class="text-sm text-gray-500">現在、登録されたインフルエンサーはいません。</p>
+    {% endfor %}
+  </div>
+
+  <div class="text-center">
+    <a href="{% url 'fan:home' %}"
+       class="text-accent-purple hover:underline font-medium">
+      &laquo; 上位4件の一覧に戻る
+    </a>
+  </div>
+{% endblock %}

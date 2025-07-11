@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-5696+rj+37h1&_*l6^lbkmj=5!)qcu3i4&kd47)r)=*nz2(z#4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['giftyo.net', 'www.giftyo.net', '162.43.49.201']
-#ALLOWED_HOSTS = ['localhost','127.0.0.1',]
+#ALLOWED_HOSTS = ['giftyo.net', 'www.giftyo.net', '162.43.49.201']
+ALLOWED_HOSTS = ['localhost','127.0.0.1',]
 
 # Application definition
 
@@ -44,11 +44,21 @@ INSTALLED_APPS = [
     # 新規アプリ
     'fan',
     'influencer',
+    'accounts',
     # 新たに追加する core アプリ
     'core',
     'widget_tweaks',   # ← これを追加
     'django.contrib.humanize',
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+    # 先にカスタムバックエンド
+    'accounts.backends.EmailOrUsernameModelBackend',
+    # デフォルトバックエンドも残す
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,9 +153,9 @@ TAILWIND_APP_NAME = 'theme'
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/influencer/dashboard/'
-
+LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

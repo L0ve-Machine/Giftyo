@@ -1,36 +1,46 @@
 # Giftyo/urls.py
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from influencer.views import InfluencerSignUpView   # ← 追加
+
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
+from accounts.forms import EmailOrUsernameAuthenticationForm
+from influencer.views import InfluencerSignUpView
 
 urlpatterns = [
-    # 管理サイト
     path("admin/", admin.site.urls),
-
-    # 運営側（core アプリ）ダッシュボード
     path("manage/", include("core.urls")),
 
-    # ────────── 認証まわり ──────────
-    # 標準ログイン・ログアウト・パスワード再設定フロー
-    #   /login/            （名前: login）
-    #   /logout/           （名前: logout）
-    #   /password_reset/   ほか 3 URL
+    # ログイン
+    path(
+        "login/",
+        auth_views.LoginView.as_view(
+            template_name="registration/login.html",
+            authentication_form=EmailOrUsernameAuthenticationForm,
+        ),
+        name="login",
+    ),
+
+    # カスタム logout を include("auth.urls") の前に定義
+    path(
+        "logout/",
+        LogoutView.as_view(next_page="login"),
+        name="logout"
+    ),
+
+    # 標準のパス（password_change や password_reset など）
     path("", include("django.contrib.auth.urls")),
 
-    # 新規登録（インフルエンサー）
+    # インフルエンサー用サインアップ
     path("signup/", InfluencerSignUpView.as_view(), name="signup"),
 
-    # ────────── 機能別アプリ ──────────
-    # インフルエンサー機能（プロフィール／ダッシュボードなど）
+    # その他ルート
     path("influencer/", include("influencer.urls", namespace="influencer")),
-
-    # ファン側の一般ページ
     path("", include("fan.urls", namespace="fan")),
 ]
 
-# 開発中はメディアを直接配信
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

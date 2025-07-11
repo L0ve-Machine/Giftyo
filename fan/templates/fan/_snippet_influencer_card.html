@@ -1,0 +1,54 @@
+{# fan/templates/fan/_snippet_influencer_card.html #}
+{% if size == "large" %}
+  <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
+     class="block bg-white border rounded-lg shadow p-3 hover:shadow-md transition">
+    <div class="w-20 h-20 mb-2 overflow-hidden rounded-full mx-auto bg-gray-100 flex items-center justify-center">
+      {% if inf.profile_image %}
+        <img src="{{ inf.profile_image.url }}" alt="{{ inf.display_name }}" class="object-cover w-full h-full"/>
+      {% else %}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 12c2.7 0 4.875-2.175 4.875-4.875S14.7 2.25 12 2.25 7.125 4.425 7.125 7.125 9.3 12 12 12zm0 1.5c-3.225 0-9.75 1.612-9.75 4.875v2.25h19.5v-2.25c0-3.263-6.525-4.875-9.75-4.875z"/>
+        </svg>
+      {% endif %}
+    </div>
+    <p class="text-center text-sm font-semibold text-black">{{ inf.display_name }}</p>
+  </a>
+
+{% else %}
+  {% if inf.slug %}
+    <a href="{% url 'fan:influencer_public' slug=inf.slug %}"
+       class="block bg-white border rounded-lg shadow p-4 flex items-center space-x-4 hover:shadow-md transition">
+  {% else %}
+    <div class="block bg-white border rounded-lg shadow p-4 flex items-center space-x-4 text-gray-400">
+  {% endif %}
+      {% if inf.profile_image %}
+        <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+          <img src="{{ inf.profile_image.url }}" alt="{{ inf.display_name }}" class="object-cover w-full h-full"/>
+        </div>
+      {% else %}
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12c2.7 0 4.875-2.175 4.875-4.875S14.7 2.25 12 2.25 7.125 4.425 7.125 7.125 9.3 12 12 12zm0 1.5c-3.225 0-9.75 1.612-9.75 4.875v2.25h19.5v-2.25c0-3.263-6.525-4.875-9.75-4.875z"/>
+          </svg>
+        </div>
+      {% endif %}
+
+      <div class="flex-1">
+        <h2 class="text-base font-semibold text-black">{{ inf.display_name }}</h2>
+        {% if inf.bio %}
+          <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ inf.bio }}</p>
+        {% endif %}
+      </div>
+
+      {% if inf.slug %}
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      {% endif %}
+
+  {% if inf.slug %}
+    </a>
+  {% else %}
+    </div>
+  {% endif %}
+{% endif %}

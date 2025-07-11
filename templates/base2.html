@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Giftyo For Influencer{% endblock %}</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'accent-purple': '#D8B4FE',  /* purple-300 */
+            'accent-dark': '#C084FC'      /* purple-400 */
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- 三本線アイコンカスタムCSS -->
+  <style>
+    details summary::-webkit-details-marker { display: none; }
+    summary::-moz-list-bullet { font-size: 0; }
+    summary { list-style: none; }
+  </style>
+</head>
+<body class="bg-gray-50 text-black font-sans">
+
+  <!-- ヘッダー（インフルエンサー用） -->
+  <header class="shadow-sm mb-0">
+    <div class="max-w-md mx-auto bg-accent-purple px-4 py-2 flex items-center">  
+      <!-- ロゴ + for Influencer テキスト -->
+      <a href="{% url 'influencer:dashboard' %}" class="flex items-center space-x-2">
+        <img
+          src="{% static 'images/giftyo.png' %}"
+          alt="Giftyo ロゴ"
+          class="h-8 w-auto bg-transparent"
+        />
+        <span class="text-black text-base font-bold">For Influencer</span>
+      </a>
+
+      <!-- ハンバーガーメニュー -->
+      <div class="ml-auto">
+        <details class="relative">
+          <summary class="cursor-pointer p-2 rounded hover:bg-accent-dark focus:outline-none focus:ring">
+            <div class="space-y-1">
+              <span class="block h-0.5 w-5 bg-black"></span>
+              <span class="block h-0.5 w-5 bg-black"></span>
+              <span class="block h-0.5 w-5 bg-black"></span>
+            </div>
+          </summary>
+          <ul class="absolute right-0 mt-1 w-36 bg-white border border-gray-200 rounded-lg shadow-lg">
+            <li>
+              <a href="{% url 'influencer:dashboard' %}"
+                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                ダッシュボード
+              </a>
+            </li>
+            <li>
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  ログアウト
+                </button>
+              </form>
+            </li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="max-w-md mx-auto px-4 pt-0 pb-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- フッター -->
+  <footer class="max-w-md mx-auto px-4 py-2 text-center text-sm text-gray-500">
+    &copy; 2025 Giftyo
+  </footer>
+
+</body>
+</html>

@@ -4,24 +4,6 @@
 {% block title %}インフルエンサー一覧 | Giftyo{% endblock %}
 
 {% block content %}
-  <!-- 検索フォーム -->
-  <form method="get" class="mb-6">
-    <div class="flex shadow rounded-lg overflow-hidden border border-gray-200">
-      <input
-        type="text"
-        name="q"
-        value="{{ q }}"
-        placeholder="インフルエンサー名で検索"
-        class="flex-1 px-3 py-2 text-black focus:outline-none border-none"
-      />
-      <button
-        type="submit"
-        class="px-4 py-2 bg-accent-purple hover:bg-accent-dark text-white font-bold"
-      >
-        検索
-      </button>
-    </div>
-  </form>
 
   <!-- ランダムインフルエンサー表示 -->
   {% if random_influencers %}
@@ -47,9 +29,9 @@
   {% if has_more %}
     <div class="text-center mb-8">
       <a href="{% url 'fan:influencer_list_all' %}?q={{ q }}"
-         class="inline-block text-accent-purple hover:underline font-medium">
-        すべてのインフルエンサーを見る &raquo;
-      </a>
+           class="inline-block text-accent-purple hover:underline font-medium">
+          すべてのインフルエンサーを見る &raquo;
+        </a>
     </div>
   {% endif %}
 
@@ -60,4 +42,3 @@
     </a>
   </div>
 {% endblock %}
-

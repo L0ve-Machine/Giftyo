@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% load static humanize url_icon %}
 
 {% block content %}
@@ -30,36 +30,45 @@
         </div>
       {% endif %}
 <div class="max-w-3xl mx-auto mt-8">
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
 
-  <div class="bg-white shadow-md rounded-lg p-6 mb-8">
-    <div class="flex items-center space-x-4">
-      {% if profile.profile_image %}
-        <img src="{{ profile.profile_image.url }}"
-             alt="{{ profile.display_name }}"
-             class="w-16 h-16 object-cover rounded-full">
-      {% else %}
-        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg"
+    <!-- 左 2/5：右 3/5 の割合 -->
+    <div class="flex space-x-6 items-center">
+
+      <!-- 左カラム：幅 2/5、フレックス中央寄せ -->
+  <div class="flex-shrink-0 w-2/5 flex items-center justify-center">
+        {% if profile.profile_image %}
+          <img src="{{ profile.profile_image.url }}"
+          alt="{{ profile.display_name }}"
+          class="w-24 h-24 object-cover rounded-full">
+        {% else %}
+          <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
                class="h-8 w-8 text-gray-400"
                viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 12c2.7 0 4.875-2.175 4.875-4.875S14.7 2.25 12 2.25 7.125 4.425 7.125 7.125 9.3 12 12 12zm0 1.5c-3.225 0-9.75 1.612-9.75 4.875v2.25h19.5v-2.25c0-3.263-6.525-4.875-9.75-4.875z"/>
           </svg>
-        </div>
-      {% endif %}
-
-      <div class="flex-1">
-        <p class="text-2xl font-semibold text-gray-800">{{ profile.display_name }}</p>
-        {% if profile.bio %}
-          <p class="text-sm text-gray-600 mt-1">{{ profile.bio }}</p>
+          </div>
         {% endif %}
-        <p class="text-sm text-gray-500 mt-1">
-          URLスラッグ：<span class="font-medium">{{ profile.slug }}</span>
-        </p>
+      </div>
 
-        <div class="flex space-x-3 mt-3">
+        <!-- 右カラム：幅 3/5 -->
+      <div class="w-3/5 flex flex-col">
+        <!-- 1. テキスト群を別行で -->
+        <div>
+          <p class="text-2xl font-semibold text-gray-800">{{ profile.display_name }}</p>
+          {% if profile.bio %}
+            <p class="text-sm text-gray-600 mt-1">{{ profile.bio }}</p>
+          {% endif %}
+          <p class="text-sm text-gray-500 mt-1">
+           スラッグ: <span class="font-medium">{{ profile.slug }}</span>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center space-x-3 mt-3">
           {% if profile.instagram_url %}
             <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener noreferrer"
-               class="text-pink-500 hover:text-pink-600 transition-colors">
+               class="text-pink-500 hover:text-pink-600">
               <svg xmlns="http://www.w3.org/2000/svg"
                    class="h-5 w-5"
                    viewBox="0 0 50 50"
@@ -161,14 +170,16 @@
           {% endif %}
           {# ↑ ここまで ↑ #}
         </div>
-      </div>
 
-      <a href="{% url 'influencer:profile' %}"
-         class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-sm text-sm">
-        プロフィールを編集
-      </a>
+      <div class="mt-4">
+          <a href="{% url 'influencer:profile' %}"
+             class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg shadow-sm text-sm">
+            プロフィールを編集
+          </a>
+        </div>
     </div>
   </div>
+    </div>
 
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-xl font-bold text-gray-800">欲しいもののリスト</h2>
@@ -179,50 +190,54 @@
   </div>
 
   {% for item in wish_list %}
-    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
-      <div class="flex space-x-4">
+  <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+    <div class="flex space-x-4 items-center md:items-start">
+      {# 画像とテキスト部分 #}
+      <div class="w-24 h-24 flex-shrink-0">
         {% if item.image_file %}
-          <img src="{{ item.image_file.url }}"
-               alt="{{ item.product_name }}"
-               class="w-24 h-24 object-cover rounded-lg">
+          <img src="{{ item.image_file.url }}" alt="{{ item.product_name }}"
+               class="w-full h-full object-cover rounded-lg">
         {% elif item.image_url %}
-          <img src="{{ item.image_url }}"
-               alt="{{ item.product_name }}"
-               class="w-24 h-24 object-cover rounded-lg">
+          <img src="{{ item.image_url }}" alt="{{ item.product_name }}"
+               class="w-full h-full object-cover rounded-lg">
         {% else %}
-          <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center">
+          <div class="w-full h-full bg-gray-100 rounded-lg flex items-center justify-center">
             <span class="text-gray-400 text-sm">No Image</span>
           </div>
         {% endif %}
+      </div>
+      <div class="flex-1">
+        <p class="text-lg font-semibold text-gray-800">{{ item.product_name }}</p>
+        {% if item.brand %}
+          <p class="text-sm text-gray-600 mt-1">ブランド: {{ item.brand }}</p>
+        {% endif %}
+        {% if item.product_url %}
+          <p class="mt-1">
+            <a href="{{ item.product_url }}"
+               class="text-blue-500 hover:underline text-sm truncate block w-48">
+              商品ページを見る
+            </a>
+          </p>
+        {% endif %}
+        {% if item.desired_price %}
+          <p class="text-sm text-gray-700 mt-1">
+            希望価格: ¥{{ item.desired_price|intcomma }}
+          </p>
+        {% endif %}
+        {% if item.note %}
+          <p class="text-sm text-gray-600 mt-1">備考: {{ item.note }}</p>
+        {% endif %}
+        <p class="text-xs text-gray-400 mt-1">
+          作成日: {{ item.created_at|date:"Y年n月j日 H:i" }}
+        </p>
 
-        <div class="flex-1">
-          <p class="text-lg font-semibold text-gray-800">{{ item.product_name }}</p>
-          {% if item.brand %}
-            <p class="text-sm text-gray-600 mt-1">ブランド: {{ item.brand }}</p>
-          {% endif %}
-          {% if item.product_url %}
-            <p class="mt-1">
-              <a href="{{ item.product_url }}"
-                 class="text-blue-500 hover:underline text-sm truncate block w-48">
-                商品ページを見る
-              </a>
-            </p>
-          {% endif %}
-          {% if item.desired_price %}
-            <p class="text-sm text-gray-700 mt-1">希望価格: ¥{{ item.desired_price|intcomma }}</p>
-          {% endif %}
-          {% if item.note %}
-            <p class="text-sm text-gray-600 mt-1">備考: {{ item.note }}</p>
-          {% endif %}
-          <p class="text-xs text-gray-400 mt-1">作成日: {{ item.created_at|date:"Y年n月j日 H:i" }}</p>
-        </div>
-
-        <div class="flex flex-col space-y-2">
+        {# スマホ用：下に横並び #}
+        <div class="mt-3 flex space-x-2 md:hidden">
           <a href="{% url 'influencer:wish_edit' item.pk %}"
-             class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm text-center">
+             class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm flex-1 text-center">
             編集
           </a>
-          <form method="post" action="{% url 'influencer:wish_delete' item.pk %}">
+          <form method="post" action="{% url 'influencer:wish_delete' item.pk %}" class="flex-1">
             {% csrf_token %}
             <button type="submit"
                     class="w-full px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm">
@@ -231,10 +246,27 @@
           </form>
         </div>
       </div>
+
+      {# PC用：右側に縦並び #}
+      <div class="hidden md:flex md:flex-col md:space-y-2">
+        <a href="{% url 'influencer:wish_edit' item.pk %}"
+           class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm text-center">
+          編集
+        </a>
+        <form method="post" action="{% url 'influencer:wish_delete' item.pk %}">
+          {% csrf_token %}
+          <button type="submit"
+                  class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm">
+            削除
+          </button>
+        </form>
+      </div>
     </div>
-  {% empty %}
-    <p class="text-gray-500">まだ登録されているアイテムはありません。</p>
-  {% endfor %}
+  </div>
+{% empty %}
+  <p class="text-gray-500">まだ登録されているアイテムはありません。</p>
+{% endfor %}
+
 
 </div>
     <div class="mt-6">

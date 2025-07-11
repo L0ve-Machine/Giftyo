@@ -6,16 +6,18 @@ from core.models import WarehouseInfo
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
 from django.contrib import messages
-
+from accounts.decorators import public_view
 
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm  # 同じアプリなのでこれでOK
 
+@public_view
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('login')
+
 
 
 @login_required
@@ -44,6 +46,7 @@ def influencer_profile_view(request):
         'form': form,
         'profile': profile,
     })
+
 
 
 @login_required

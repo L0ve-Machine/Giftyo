@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from core.models import WarehouseInfo  # 追加
+from accounts.decorators import public_view
 
 # fan/views.py
 import random
@@ -16,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 from django.conf import settings   # 追加
 
+@public_view
 def confirm_payment(request, slug, gift_id):
     influencer = get_object_or_404(Influencer, slug=slug)
     gift       = get_object_or_404(Gift, pk=gift_id, to_profile=influencer)
@@ -34,38 +36,60 @@ def confirm_payment(request, slug, gift_id):
     })
 
 
-
+@public_view
 def influencer_list(request):
-    # ———————— 検索キーワード取得 ————————
+    # — 検索キーワード取得 —
     q = request.GET.get('q', '').strip()
 
-    # ———————— ベースクエリ ————————
+    # — ベースクエリ —
     base_qs = Influencer.objects.filter(is_public=True)
-
-    # ———————— 検索絞り込み ————————
     if q:
         base_qs = base_qs.filter(display_name__icontains=q)
 
-    # ———————— slug が空のものを除外してランダム3名取得 ————————
-    random_influencers = (base_qs
-                          .exclude(slug__isnull=True)
-                          .exclude(slug='')
-                          .order_by('?')[:3])
+    # — ランダム3名取得 —
+    random_influencers = (
+        base_qs
+        .exclude(slug__isnull=True)
+        .exclude(slug='')
+        .order_by('?')[:3]
+    )
 
-    # ———————— (必要なら一覧も slug ありに) ————————
-    influencers = base_qs.exclude(slug__exact='')
+    # — 上位4件だけ取得 & “もっと見る”判定 —
+    full_list = base_qs.exclude(slug__exact='')
+    featured_influencers = full_list[:4]
+    has_more = full_list.count() > 4
 
     return render(request, 'fan/home.html', {
-        'influencers': influencers,
-        'random_influencers': random_influencers,
         'q': q,
+        'random_influencers': random_influencers,
+        'influencers': featured_influencers,
+        'has_more': has_more,
+    })
+
+
+
+@public_view
+def influencer_list_all(request):
+    """全件表示ページ"""
+    q = request.GET.get('q', '').strip()
+    # is_public=True のみ
+    qs = Influencer.objects.filter(is_public=True)
+    if q:
+        qs = qs.filter(display_name__icontains=q)
+
+    # slug が空のものは除外
+    all_influencers = qs.exclude(slug__exact='')
+
+    return render(request, 'fan/influencer_list_all.html', {
+        'q': q,
+        'influencers': all_influencers,
     })
 
 
 
 
 
-
+@public_view
 def gift_notify(request, slug):
     influencer = get_object_or_404(Influencer, slug=slug)
     warehouse  = WarehouseInfo.objects.first()
@@ -137,7 +161,7 @@ def gift_notify(request, slug):
         "sent_date":         sent_date,
     })
 
-
+@public_view
 def thank_you(request):
     """
     Stripe 決済完了後にリダイレクトされるサンクスページ。
@@ -169,6 +193,8 @@ from django.views.decorators.csrf import csrf_exempt
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # ----------------------- Checkout Session 生成 -----------------------
+
+@public_view
 @require_POST
 def create_checkout_session(request, slug, gift_id):
     """
@@ -218,10 +244,13 @@ def create_checkout_session(request, slug, gift_id):
     return JsonResponse({"id": session.id})
 
 # ----------------------- 決済キャンセル -----------------------
+
+@public_view
 def payment_cancel(request):
     return render(request, "fan/payment_cancel.html")
 
 # ----------------------- Webhook -----------------------
+@public_view
 @csrf_exempt
 def stripe_webhook(request):
     payload       = request.body

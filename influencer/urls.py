@@ -14,6 +14,6 @@ urlpatterns = [
     path('gift/<int:pk>/mark-read/', views.gift_mark_read_view, name='gift_mark_read'),
     path('shipping-address/', views.shipping_address_view, name='shipping_address'),
 
-    path('signup/', RegisterView.as_view(), name='signup'),
+    path('signup/', RegisterView,name='signup'),
 ]
 

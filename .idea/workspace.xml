@@ -5,8 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db802e20-4e4f-4553-8ca5-83d4429cca8d" name="変更" comment="">
+      <change afterPath="$PROJECT_DIR$/accounts/backends.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/accounts/decorators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/accounts/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fan/templates/fan/_snippet_influencer_card.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fan/templates/fan/influencer_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fan/templates/fan/influencer_list_all.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/base2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Giftyo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Giftyo/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Giftyo/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Giftyo/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fan/templates/fan/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/fan/templates/fan/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/fan/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fan/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/fan/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/profile_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/public_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/public_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/shipping_address.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/shipping_address.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/wishitem_confirm_delete.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/wishitem_confirm_delete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/wishitem_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/wishitem_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/templates/influencer/wishitem_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/templates/influencer/wishitem_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/influencer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/influencer/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/Giftyo.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/images/Giftyo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/password_reset_complete.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/password_reset_complete.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/password_reset_confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/password_reset_confirm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/password_reset_done.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/password_reset_done.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/password_reset_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/password_reset_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +46,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -55,11 +83,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\genki\PycharmProjects\Giftyo\templates" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\influencer\templatetags" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\static\images" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\core\templates" />
       <recent name="C:\Users\genki\PycharmProjects\Giftyo\theme\static_src" />
-      <recent name="C:\Users\genki\PycharmProjects\Giftyo\theme\static_src\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -141,7 +169,9 @@
       <workItem from="1751724683973" duration="3902000" />
       <workItem from="1751821762982" duration="5215000" />
       <workItem from="1751908445226" duration="1966000" />
-      <workItem from="1752054849762" duration="1800000" />
+      <workItem from="1752054849762" duration="3725000" />
+      <workItem from="1752128884579" duration="14591000" />
+      <workItem from="1752234344022" duration="10646000" />
     </task>
     <servers />
   </component>

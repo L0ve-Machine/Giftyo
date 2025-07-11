@@ -8,6 +8,7 @@ app_name = "fan"
 urlpatterns = [
     # 1. トップページ
     path("", views.influencer_list, name="home"),
+    path('all/', views.influencer_list_all, name='influencer_list_all'),
 
     # 2. インフルエンサー詳細
     path("u/<slug:slug>/", influencer_public_profile, name="influencer_public"),
